@@ -42,12 +42,9 @@ class ViewController: UITableViewController{
         self.tableView.rowHeight = UITableViewAutomaticDimension
         self.tableView.estimatedRowHeight = 100
         self.tableView.separatorStyle = UITableViewCellSeparatorStyle.None
-//        tableView.registerClass(testTableViewCell.self, forCellReuseIdentifier: "cell")
-        tableView.registerClass(indexPostCell.self, forCellReuseIdentifier: "cell")
         self.navigationController?.navigationBar.backgroundColor = UIColor(red: 51/255, green: 165/255, blue: 252/255, alpha: 1.0)
         NSLog("---\(self.classForCoder):加载成功---")   //转跳成功日志
         self.title = "BU"
-        refreshControl?.addTarget(self, action: "refresh", forControlEvents: .ValueChanged)
         
         let left = UIBarButtonItem(title: "Left", style: .Plain, target: self, action: Selector("leftButton"))
         self.navigationItem.leftBarButtonItem = left
@@ -264,7 +261,6 @@ class ViewController: UITableViewController{
             if response.result.isSuccess {
                 let body = response.result.value as! NSDictionary
                 if body.valueForKey("result") as! String == "success"{
-                    self.tableView.separatorStyle = UITableViewCellSeparatorStyle.SingleLine
                     self.delegate.grpList.removeAll();
                     self.delegate.frmList.removeAllObjects()
                     self.delegate.subList.removeAllObjects()
