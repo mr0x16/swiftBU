@@ -39,6 +39,6 @@ class indexDataSource: NSObject,UITableViewDataSource{
         let rowNo = indexPath.row as Int
         let currDate = cellDate[rowNo]
         configCell!(cell,currDate)
-        return cell!
+        return cell
     }
 }

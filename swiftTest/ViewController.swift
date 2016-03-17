@@ -33,8 +33,10 @@ class ViewController: UITableViewController{
     dynamic var stateCount = 0
     private var mycontext = 0
     let modalView = secViewController()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         modalView.modalPresentationStyle = .OverCurrentContext
         modalView.modalTransitionStyle = .CrossDissolve
         
@@ -78,29 +80,29 @@ class ViewController: UITableViewController{
             if stateCount == 4 {
                 self.dismissViewControllerAnimated(true, completion: nil)
                 self.setUpCell()
-                self.tableView.reloadData()
-                let diff = 0.015
-                let cells:[indexPostCell] = self.tableView.visibleCells as! [indexPostCell]
-                for cell in cells{
-                    cell.transform = CGAffineTransformMakeTranslation(UIScreen.mainScreen().bounds.width, 0)
-                }
-                for i in 0..<cells.count {
-                    let cell:indexPostCell = cells[i] as indexPostCell
-                    let delay = diff*Double(i)
-                    UIView.animateWithDuration(1, delay: delay, options: UIViewAnimationOptions.AllowAnimatedContent, animations: { () -> Void in
-                        cell.transform = CGAffineTransformMakeTranslation(0, 0)
-                        }, completion: nil)
-                }
             }
         }
     }
     
     func setUpCell(){
-        let dateSource = indexDataSource(cellDate: delegate.homePostList, cellId: "pCell", configureCell:{(cell, cellDate) in
+        let dateSource = indexDataSource(cellDate: self.delegate.homePostList, cellId: "pCell", configureCell:{(cell, cellDate) in
             let pCell = cell as! indexPostCell
             pCell.configureForCell(cellDate as! postCell)
         })
         self.tableView.dataSource = dateSource
+        self.tableView.reloadData()
+        let diff = 0.015
+        let cells:[indexPostCell] = self.tableView.visibleCells as! [indexPostCell]
+        for cell in cells{
+            cell.transform = CGAffineTransformMakeTranslation(UIScreen.mainScreen().bounds.width, 0)
+        }
+        for i in 0..<cells.count {
+            let cell:indexPostCell = cells[i] as indexPostCell
+            let delay = diff*Double(i)
+            UIView.animateWithDuration(1, delay: delay, options: UIViewAnimationOptions.AllowAnimatedContent, animations: { () -> Void in
+                cell.transform = CGAffineTransformMakeTranslation(0, 0)
+                }, completion: nil)
+        }
     }
     
     func leftButton() {
