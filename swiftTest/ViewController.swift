@@ -32,6 +32,7 @@ class ViewController: UITableViewController{
     var forumList = NSMutableDictionary()
     dynamic var stateCount = 0
     private var mycontext = 0
+    let datasoure = indexDataSource()
     let modalView = secViewController()
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -46,7 +47,7 @@ class ViewController: UITableViewController{
         self.navigationController?.navigationBar.backgroundColor = UIColor(red: 51/255, green: 165/255, blue: 252/255, alpha: 1.0)
         NSLog("---\(self.classForCoder):加载成功---")   //转跳成功日志
         self.title = "BU"
-        self.tableView.dequeueReusableCellWithIdentifier("pCell")
+        
         let left = UIBarButtonItem(title: "Left", style: .Plain, target: self, action: Selector("leftButton"))
         self.navigationItem.leftBarButtonItem = left
         self.addObserver(self, forKeyPath: "stateCount", options: .New, context:&mycontext)
@@ -76,8 +77,7 @@ class ViewController: UITableViewController{
     override func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: [String : AnyObject]?, context: UnsafeMutablePointer<Void>) {
         if(context == &mycontext){
             if stateCount == 4 {
-                self.dismissViewControllerAnimated(true, completion: nil)
-                self.setUpCell()
+                self.tableView.dataSource = datasoure
                 self.tableView.reloadData()
                 let diff = 0.015
                 let cells:[indexPostCell] = self.tableView.visibleCells as! [indexPostCell]
@@ -91,16 +91,9 @@ class ViewController: UITableViewController{
                         cell.transform = CGAffineTransformMakeTranslation(0, 0)
                         }, completion: nil)
                 }
+                self.dismissViewControllerAnimated(true, completion: nil)
             }
         }
-    }
-    
-    func setUpCell(){
-        let dateSource = indexDataSource(cellDate: delegate.homePostList, cellId: "pCell", configureCell:{(cell, cellDate) in
-            let pCell = cell as! indexPostCell
-            pCell.configureForCell(cellDate as! postCell)
-        })
-        self.tableView.dataSource = dateSource
     }
     
     func leftButton() {
