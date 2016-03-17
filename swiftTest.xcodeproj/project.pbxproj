@@ -15,6 +15,7 @@
 		0F77FA201C5D072A00B51461 /* forumCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F77FA1F1C5D072A00B51461 /* forumCell.swift */; };
 		0F77FA221C5D07F900B51461 /* subCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F77FA211C5D07F900B51461 /* subCell.swift */; };
 		0F88BDED1C5B3C2E00E0B6AD /* paramsTrans.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F88BDEC1C5B3C2E00E0B6AD /* paramsTrans.swift */; };
+		0F8F12CE1C9A5A74004129FE /* indexDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F8F12CD1C9A5A74004129FE /* indexDataSource.swift */; };
 		0F8F71FB1C5A1F1800CB62C8 /* modifyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F8F71FA1C5A1F1800CB62C8 /* modifyViewController.swift */; };
 		0F94EA4B1C57855900DDC03A /* userListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F94EA4A1C57855900DDC03A /* userListViewController.swift */; };
 		0FB332131C5619AB0070B062 /* setViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FB332121C5619AB0070B062 /* setViewController.swift */; };
@@ -44,6 +45,7 @@
 		0F77FA1F1C5D072A00B51461 /* forumCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = forumCell.swift; path = ../forumCell.swift; sourceTree = "<group>"; };
 		0F77FA211C5D07F900B51461 /* subCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = subCell.swift; path = ../subCell.swift; sourceTree = "<group>"; };
 		0F88BDEC1C5B3C2E00E0B6AD /* paramsTrans.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = paramsTrans.swift; sourceTree = "<group>"; };
+		0F8F12CD1C9A5A74004129FE /* indexDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = indexDataSource.swift; sourceTree = "<group>"; };
 		0F8F71FA1C5A1F1800CB62C8 /* modifyViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = modifyViewController.swift; sourceTree = "<group>"; };
 		0F94EA4A1C57855900DDC03A /* userListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = userListViewController.swift; sourceTree = "<group>"; };
 		0FB332121C5619AB0070B062 /* setViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = setViewController.swift; sourceTree = "<group>"; };
@@ -137,6 +139,7 @@
 				0F77FA1D1C5D071A00B51461 /* groupCell.swift */,
 				0F88BDEC1C5B3C2E00E0B6AD /* paramsTrans.swift */,
 				D36F270E1C970ECA001E8D27 /* postCell.swift */,
+				0F8F12CD1C9A5A74004129FE /* indexDataSource.swift */,
 			);
 			name = model;
 			sourceTree = "<group>";
@@ -304,6 +307,7 @@
 				D392301A1C64DF6000903561 /* ContainerViewController.swift in Sources */,
 				0FCDE32B1C58A578005BAC34 /* swiftTestUserInfo+CoreDataProperties.swift in Sources */,
 				0F94EA4B1C57855900DDC03A /* userListViewController.swift in Sources */,
+				0F8F12CE1C9A5A74004129FE /* indexDataSource.swift in Sources */,
 				0FD041841C55E626006F0110 /* secViewController.swift in Sources */,
 				0F3558EE1C537FD9008CE0F5 /* AppDelegate.swift in Sources */,
 				0F77FA1E1C5D071A00B51461 /* groupCell.swift in Sources */,

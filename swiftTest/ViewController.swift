@@ -32,16 +32,18 @@ class ViewController: UITableViewController{
     var forumList = NSMutableDictionary()
     dynamic var stateCount = 0
     private var mycontext = 0
+    let datasoure = indexDataSource()
+    let modalView = secViewController()
     override func viewDidLoad() {
         super.viewDidLoad()
-        let modalView = secViewController()
         modalView.modalPresentationStyle = .OverCurrentContext
         modalView.modalTransitionStyle = .CrossDissolve
-        self.presentViewController(modalView, animated: true, completion: nil)
+        
         
         self.tableView.rowHeight = UITableViewAutomaticDimension
         self.tableView.estimatedRowHeight = 100
         self.tableView.separatorStyle = UITableViewCellSeparatorStyle.None
+        
         self.navigationController?.navigationBar.backgroundColor = UIColor(red: 51/255, green: 165/255, blue: 252/255, alpha: 1.0)
         NSLog("---\(self.classForCoder):加载成功---")   //转跳成功日志
         self.title = "BU"
@@ -61,8 +63,7 @@ class ViewController: UITableViewController{
         if delegate.getData().nums == 0 {
             segueSetting()
         } else {
-            
-            
+            self.presentViewController(modalView, animated: true, completion: nil)
         }
     }
     
@@ -71,67 +72,12 @@ class ViewController: UITableViewController{
         // Dispose of any resources that can be recreated.
     }
     
-    // MARK: - tableView方法
-    
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int{
-//        if self.delegate.grpList.count == 0{
-//            return 0
-//        }
-//        self.tableView.numberOfSections
-//        NSLog("table has \(self.delegate.grpList.count) sections")
-//        return self.delegate.grpList.count
-        return 1
-    }
-    
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if self.delegate.grpList.count == 0{
-            return 0
-        }
-        return self.delegate.homePostList.count
-    }
-//
-//    override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-//        if self.delegate.grpList.count == 0{
-//            return ""
-//        }
-//        return self.delegate.grpList[section].grpName
-//    }
-    
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        var cell = tableView.dequeueReusableCellWithIdentifier("cell") as? indexPostCell
-        if cell == nil{
-            cell = indexPostCell(style: UITableViewCellStyle.Default, reuseIdentifier: "cell")
-            cell?.selectionStyle = UITableViewCellSelectionStyle.None
-        }
-        let rowNo = indexPath.row as Int
-        let currPost = self.delegate.homePostList[rowNo]
-        let authorText = currPost.author
-        let whenText = currPost.when
-        let tid_sumText = currPost.tid_sum
-        let titleText = currPost.pname
-//        cell.mainLab.text = mainText
-//        cell.rightLab.text = rightText
-        cell!.pLabel.text = titleText
-        cell!.aLabel.text = "发帖人：\(authorText)"
-        cell!.wLabel.text = "最后回复：\(whenText)"
-        cell!.tLabel.text = "回复数：\(tid_sumText)"
-        return cell!
-    }
-    
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        delegateView?.collapseSidePanels()
-        let sectionNo = indexPath.section as Int
-        let rowNo = indexPath.row as Int
-        let frmKey = self.delegate.grpList[sectionNo].frmArray[rowNo] as! String
-        self.delegate.currFrmId = frmKey
-        let poView = poViewController()
-//        self.navigationController?.pushViewController(poView, animated: true)
-    }
 
     // MARK: - 其他方法
     override func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: [String : AnyObject]?, context: UnsafeMutablePointer<Void>) {
         if(context == &mycontext){
             if stateCount == 4 {
+                self.tableView.dataSource = datasoure
                 self.tableView.reloadData()
                 let diff = 0.015
                 let cells:[indexPostCell] = self.tableView.visibleCells as! [indexPostCell]
