@@ -9,8 +9,14 @@
 import UIKit
 
 class indexDataSource: NSObject,UITableViewDataSource{
-    var delegate = UIApplication.sharedApplication().delegate as! AppDelegate
-    override init() {
+    var cellDate:[AnyObject]
+    var cellId:String
+    var configCell:((AnyObject, AnyObject) -> ())?
+    
+    init(cellDate:[AnyObject], cellId:String, configureCell:(AnyObject,AnyObject) -> ()){
+        self.cellDate = cellDate
+        self.cellId = cellId
+        self.configCell = configureCell
         super.init()
     }
     
@@ -19,28 +25,20 @@ class indexDataSource: NSObject,UITableViewDataSource{
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if self.delegate.homePostList.count == 0{
-            return 0
-        }
-        return self.delegate.homePostList.count
+        return cellDate.count
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        var cell = tableView.dequeueReusableCellWithIdentifier("cell") as? indexPostCell
+        var cell = tableView.dequeueReusableCellWithIdentifier(self.cellId) as UITableViewCell!
         if cell == nil{
-            cell = indexPostCell(style: UITableViewCellStyle.Default, reuseIdentifier: "cell")
+            if self.cellId == "pCell" {
+                cell = indexPostCell(style: UITableViewCellStyle.Default, reuseIdentifier: self.cellId)
+            }
             cell?.selectionStyle = UITableViewCellSelectionStyle.None
         }
         let rowNo = indexPath.row as Int
-        let currPost = self.delegate.homePostList[rowNo]
-        let authorText = currPost.author
-        let whenText = currPost.when
-        let tid_sumText = currPost.tid_sum
-        let titleText = currPost.pname
-        cell!.pLabel.text = titleText
-        cell!.aLabel.text = "发帖人：\(authorText)"
-        cell!.wLabel.text = "最后回复：\(whenText)"
-        cell!.tLabel.text = "回复数：\(tid_sumText)"
+        let currDate = cellDate[rowNo]
+        configCell!(cell,currDate)
         return cell!
     }
 }
