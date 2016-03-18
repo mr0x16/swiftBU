@@ -44,7 +44,6 @@ class ViewController: UITableViewController{
         self.tableView.rowHeight = UITableViewAutomaticDimension
         self.tableView.estimatedRowHeight = 100
         self.tableView.separatorStyle = UITableViewCellSeparatorStyle.None
-        
         self.navigationController?.navigationBar.backgroundColor = UIColor(red: 51/255, green: 165/255, blue: 252/255, alpha: 1.0)
         NSLog("---\(self.classForCoder):加载成功---")   //转跳成功日志
         self.title = "BU"
@@ -79,7 +78,9 @@ class ViewController: UITableViewController{
         if(context == &mycontext){
             if stateCount == 4 {
                 self.dismissViewControllerAnimated(true, completion: nil)
-                self.setUpCell()
+//                dispatch_sync(dispatch_get_main_queue()) { () -> Void in
+                    self.setUpCell()
+//                }
             }
         }
     }
@@ -89,7 +90,9 @@ class ViewController: UITableViewController{
             let pCell = cell as! indexPostCell
             pCell.configureForCell(cellDate as! postCell)
         })
+        
         self.tableView.dataSource = dateSource
+        self.tableView.delegate = dateSource
         self.tableView.reloadData()
         let diff = 0.015
         let cells:[indexPostCell] = self.tableView.visibleCells as! [indexPostCell]

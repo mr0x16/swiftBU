@@ -8,7 +8,7 @@
 
 import UIKit
 
-class indexDataSource: NSObject,UITableViewDataSource{
+class indexDataSource: NSObject,UITableViewDataSource,UITableViewDelegate{
     var cellDate:[AnyObject]
     var cellId:String
     var configCell:((AnyObject, AnyObject) -> ())?
@@ -40,5 +40,9 @@ class indexDataSource: NSObject,UITableViewDataSource{
         let currDate = cellDate[rowNo]
         configCell!(cell,currDate)
         return cell
+    }
+    
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        NSLog("selected \(indexPath.row)")
     }
 }
