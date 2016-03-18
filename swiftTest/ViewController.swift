@@ -33,7 +33,7 @@ class ViewController: UITableViewController{
     dynamic var stateCount = 0
     private var mycontext = 0
     let modalView = secViewController()
-    
+    var dateSource = NSObject()
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -47,7 +47,7 @@ class ViewController: UITableViewController{
         self.navigationController?.navigationBar.backgroundColor = UIColor(red: 51/255, green: 165/255, blue: 252/255, alpha: 1.0)
         NSLog("---\(self.classForCoder):加载成功---")   //转跳成功日志
         self.title = "BU"
-        self.tableView.dequeueReusableCellWithIdentifier("pCell")
+//        self.tableView.dequeueReusableCellWithIdentifier("pCell")
         let left = UIBarButtonItem(title: "Left", style: .Plain, target: self, action: Selector("leftButton"))
         self.navigationItem.leftBarButtonItem = left
         self.addObserver(self, forKeyPath: "stateCount", options: .New, context:&mycontext)
@@ -78,21 +78,20 @@ class ViewController: UITableViewController{
         if(context == &mycontext){
             if stateCount == 4 {
                 self.dismissViewControllerAnimated(true, completion: nil)
-//                dispatch_sync(dispatch_get_main_queue()) { () -> Void in
-                    self.setUpCell()
-//                }
+//                NSLog("执行刷新")
+                self.setUpCell()
             }
         }
     }
     
     func setUpCell(){
-        let dateSource = indexDataSource(cellDate: self.delegate.homePostList, cellId: "pCell", configureCell:{(cell, cellDate) in
+        self.dateSource = indexDataSource(cellDate: self.delegate.homePostList, cellId: "pCell", configureCell:{(cell, cellDate) in
             let pCell = cell as! indexPostCell
             pCell.configureForCell(cellDate as! postCell)
         })
         
-        self.tableView.dataSource = dateSource
-        self.tableView.delegate = dateSource
+        self.tableView.dataSource = dateSource as! indexDataSource
+        self.tableView.delegate = dateSource as! indexDataSource
         self.tableView.reloadData()
         let diff = 0.015
         let cells:[indexPostCell] = self.tableView.visibleCells as! [indexPostCell]
@@ -208,8 +207,6 @@ class ViewController: UITableViewController{
                         }
                     })
                 }
-                
-//                self.performSelectorOnMainThread(Selector("dimissModal"), withObject:nil, waitUntilDone: true)
             }
         })
     }
