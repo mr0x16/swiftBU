@@ -93,7 +93,14 @@ class indexPostCell: UITableViewCell {
         }
         
     }
-
+    
+    func configureForCell(item: postCell){
+        self.pLabel.text = item.pname
+        self.aLabel.text = "发帖人: \(item.author)"
+        self.tLabel.text = "回复数: \(item.tid_sum)"
+        self.wLabel.text = "最后回复: \(item.when)"
+    }
+    
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

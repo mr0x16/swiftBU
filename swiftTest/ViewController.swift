@@ -32,10 +32,11 @@ class ViewController: UITableViewController{
     var forumList = NSMutableDictionary()
     dynamic var stateCount = 0
     private var mycontext = 0
-    let datasoure = indexDataSource()
     let modalView = secViewController()
+    var dateSource = NSObject()
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         modalView.modalPresentationStyle = .OverCurrentContext
         modalView.modalTransitionStyle = .CrossDissolve
         
@@ -43,11 +44,10 @@ class ViewController: UITableViewController{
         self.tableView.rowHeight = UITableViewAutomaticDimension
         self.tableView.estimatedRowHeight = 100
         self.tableView.separatorStyle = UITableViewCellSeparatorStyle.None
-        
         self.navigationController?.navigationBar.backgroundColor = UIColor(red: 51/255, green: 165/255, blue: 252/255, alpha: 1.0)
         NSLog("---\(self.classForCoder):加载成功---")   //转跳成功日志
         self.title = "BU"
-        
+//        self.tableView.dequeueReusableCellWithIdentifier("pCell")
         let left = UIBarButtonItem(title: "Left", style: .Plain, target: self, action: Selector("leftButton"))
         self.navigationItem.leftBarButtonItem = left
         self.addObserver(self, forKeyPath: "stateCount", options: .New, context:&mycontext)
@@ -77,22 +77,33 @@ class ViewController: UITableViewController{
     override func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: [String : AnyObject]?, context: UnsafeMutablePointer<Void>) {
         if(context == &mycontext){
             if stateCount == 4 {
-                self.tableView.dataSource = datasoure
-                self.tableView.reloadData()
-                let diff = 0.015
-                let cells:[indexPostCell] = self.tableView.visibleCells as! [indexPostCell]
-                for cell in cells{
-                    cell.transform = CGAffineTransformMakeTranslation(UIScreen.mainScreen().bounds.width, 0)
-                }
-                for i in 0..<cells.count {
-                    let cell:indexPostCell = cells[i] as indexPostCell
-                    let delay = diff*Double(i)
-                    UIView.animateWithDuration(1, delay: delay, options: UIViewAnimationOptions.AllowAnimatedContent, animations: { () -> Void in
-                        cell.transform = CGAffineTransformMakeTranslation(0, 0)
-                        }, completion: nil)
-                }
                 self.dismissViewControllerAnimated(true, completion: nil)
+//                NSLog("执行刷新")
+                self.setUpCell()
             }
+        }
+    }
+    
+    func setUpCell(){
+        self.dateSource = indexDataSource(cellDate: self.delegate.homePostList, cellId: "pCell", configureCell:{(cell, cellDate) in
+            let pCell = cell as! indexPostCell
+            pCell.configureForCell(cellDate as! postCell)
+        })
+        
+        self.tableView.dataSource = dateSource as! indexDataSource
+        self.tableView.delegate = dateSource as! indexDataSource
+        self.tableView.reloadData()
+        let diff = 0.015
+        let cells:[indexPostCell] = self.tableView.visibleCells as! [indexPostCell]
+        for cell in cells{
+            cell.transform = CGAffineTransformMakeTranslation(UIScreen.mainScreen().bounds.width, 0)
+        }
+        for i in 0..<cells.count {
+            let cell:indexPostCell = cells[i] as indexPostCell
+            let delay = diff*Double(i)
+            UIView.animateWithDuration(1, delay: delay, options: UIViewAnimationOptions.AllowAnimatedContent, animations: { () -> Void in
+                cell.transform = CGAffineTransformMakeTranslation(0, 0)
+                }, completion: nil)
         }
     }
     
@@ -196,8 +207,6 @@ class ViewController: UITableViewController{
                         }
                     })
                 }
-                
-//                self.performSelectorOnMainThread(Selector("dimissModal"), withObject:nil, waitUntilDone: true)
             }
         })
     }
