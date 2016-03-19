@@ -113,7 +113,9 @@ class ViewController: UITableViewController{
         self.navigationController?.pushViewController(setView, animated: true)
     }
     
-
+    func updateForumCell(){
+    
+    }
     
     func userLog(){
         delegate.login()!.responseJSON{ response in
@@ -267,7 +269,5 @@ class ViewController: UITableViewController{
         })
         
     }
-    
-
 }
 
