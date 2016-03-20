@@ -8,7 +8,7 @@
 
 import UIKit
 
-class secViewController: UIViewController,UITableViewDelegate,UITableViewDataSource {
+class loadViewController: UIViewController,UITableViewDelegate,UITableViewDataSource {
     var item: [NSString] = [NSString]();
     let delegate = (UIApplication.sharedApplication().delegate) as! AppDelegate
     override func viewDidLoad() {
