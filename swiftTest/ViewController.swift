@@ -34,6 +34,8 @@ class ViewController: UITableViewController{
     private var mycontext = 0
     let modalView = secViewController()
     var dateSource = NSObject()
+    var dataKind = ""
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -110,6 +112,11 @@ class ViewController: UITableViewController{
     func leftButton() {
         NSLog("left button")
         delegateView?.toggleLeftPanel()
+    }
+    
+    func changeCell(){
+        NSLog("call change")
+        self.leftButton()
     }
     
     func segueSetting()->Void {

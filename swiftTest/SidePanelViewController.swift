@@ -123,7 +123,9 @@ class SidePanelViewController: UIViewController,UITableViewDelegate,UITableViewD
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         NSLog("\(indexPath.row)")
-        tableView.visibleCells[indexPath.row].highlighted = false
+        let centerVC = (delegate.window?.rootViewController?.childViewControllers[0] as! UINavigationController).viewControllers[0] as! ViewController
+        NSLog("\(centerVC)")
+        centerVC.changeCell()
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
