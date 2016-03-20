@@ -33,7 +33,7 @@ class ViewController: UITableViewController{
     dynamic var stateCount = 0
     private var mycontext = 0
     let datasoure = indexDataSource()
-    let modalView = loadViewController()
+    let modalView = secViewController()
     override func viewDidLoad() {
         super.viewDidLoad()
         modalView.modalPresentationStyle = .OverCurrentContext
