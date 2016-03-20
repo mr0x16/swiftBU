@@ -8,7 +8,7 @@
 
 import UIKit
 
-class secViewController: UIViewController,UITableViewDelegate,UITableViewDataSource {
+class loadViewController: UIViewController,UITableViewDelegate,UITableViewDataSource {
     var item: [NSString] = [NSString]();
     let delegate = (UIApplication.sharedApplication().delegate) as! AppDelegate
     override func viewDidLoad() {
@@ -20,7 +20,7 @@ class secViewController: UIViewController,UITableViewDelegate,UITableViewDataSou
 ////            NSLog("element[%d] is %@", i+1, item[i]);
 //        }
         delegate.window?.backgroundColor = UIColor.clearColor()
-        self.view.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.5)
+        self.view.backgroundColor = UIColor(red: 1, green: 1, blue: 1, alpha: 0)
 //        self.modalPresentationStyle = .OverCurrentContext
 //        self.modalTransitionStyle = .CrossDissolve
         let vTest = UIView(frame: CGRect(x: 0, y: 0, width: 50, height: 50))

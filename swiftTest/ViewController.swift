@@ -33,7 +33,7 @@ class ViewController: UITableViewController{
     dynamic var stateCount = 0
     private var mycontext = 0
     let datasoure = indexDataSource()
-    let modalView = secViewController()
+    let modalView = loadViewController()
     override func viewDidLoad() {
         super.viewDidLoad()
         modalView.modalPresentationStyle = .OverCurrentContext
@@ -99,6 +99,11 @@ class ViewController: UITableViewController{
     func leftButton() {
         NSLog("left button")
         delegateView?.toggleLeftPanel()
+    }
+    
+    func changeForumCell(){
+        self.leftButton()
+        
     }
     
     func segueSetting()->Void {
