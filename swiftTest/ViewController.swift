@@ -34,7 +34,20 @@ class ViewController: UITableViewController{
     private var mycontext = 0
     let modalView = secViewController()
     var dateSource = NSObject()
-    var dataKind = ""
+//    var dataKind = ""
+    
+    override func awakeFromNib() {
+        super.awakeFromNib()
+    }
+    
+    init(style: UITableViewStyle, dSource:NSObject) {
+        super.init(style: style)
+        self.dateSource = dSource
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -87,10 +100,6 @@ class ViewController: UITableViewController{
     }
     
     func setUpCell(){
-        self.dateSource = indexDataSource(cellDate: self.delegate.homePostList, cellId: "pCell", configureCell:{(cell, cellDate) in
-            let pCell = cell as! indexPostCell
-            pCell.configureForCell(cellDate as! postCell)
-        })
         
         self.tableView.dataSource = dateSource as! indexDataSource
         self.tableView.delegate = dateSource as! indexDataSource

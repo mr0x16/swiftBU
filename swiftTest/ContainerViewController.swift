@@ -19,6 +19,7 @@ class ContainerViewController: UIViewController {
     var centerNavigationController : UINavigationController!
     var centerViewController : ViewController!
     var tempLeft:SidePanelViewController?
+    let delegate = (UIApplication.sharedApplication().delegate) as! AppDelegate
     var currentState: SlideOutState = .BothCollapsed {
         didSet{
             let shouldShowShadow = currentState != .BothCollapsed
@@ -29,7 +30,10 @@ class ContainerViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        centerViewController = ViewController()
+        centerViewController = ViewController(style: .Plain, dSource: indexDataSource(cellDate: self.delegate.homePostList, cellId: "pCell", configureCell:{(cell, cellDate) in
+            let pCell = cell as! indexPostCell
+            pCell.configureForCell(cellDate as! postCell)
+        }))
         centerViewController.delegateView = self
         centerNavigationController = UINavigationController(rootViewController: centerViewController)
         view.addSubview(centerNavigationController.view)
@@ -155,17 +159,17 @@ extension ContainerViewController: UIGestureRecognizerDelegate{
     }
 }
 
-private extension UIStoryboard {
-//    class func mainStoryboard() -> UIStoryboard { return UIStoryboard(name: "Main", bundle: NSBundle.mainBundle()) }
-    
-    class func leftViewController() -> SidePanelViewController? {
-        let view = SidePanelViewController()
-        return view
-    }
-    
-    class func centerViewController() -> ViewController? {
-        let view = ViewController()
-        return view
-    }
-    
-}
+//private extension UIStoryboard {
+////    class func mainStoryboard() -> UIStoryboard { return UIStoryboard(name: "Main", bundle: NSBundle.mainBundle()) }
+//    
+//    class func leftViewController() -> SidePanelViewController? {
+//        let view = SidePanelViewController()
+//        return view
+//    }
+//    
+//    class func centerViewController() -> ViewController? {
+//        let view = ViewController()
+//        return view
+//    }
+//    
+//}
