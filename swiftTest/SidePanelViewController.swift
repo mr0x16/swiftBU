@@ -17,6 +17,13 @@ class SidePanelViewController: UIViewController,UITableViewDelegate,UITableViewD
     let delegate = (UIApplication.sharedApplication().delegate) as! AppDelegate
     let pTran = paramsTrans()
     let avatar = UIImageView(frame: CGRectZero)
+    var containVc = ContainerViewController()
+    
+    convenience init(center:ContainerViewController){
+        self.init()
+        self.containVc = center
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         NSLog("---\(self.classForCoder):加载成功---")   //转跳成功日志
@@ -24,6 +31,7 @@ class SidePanelViewController: UIViewController,UITableViewDelegate,UITableViewD
         let list = UITableView(frame: CGRectZero, style: UITableViewStyle.Plain)
         
         let userLab = UILabel()
+        
         userLab.text = pTran.paramsGet("userName") as? String
         userLab.textAlignment = .Center
         userLab.adjustsFontSizeToFitWidth = true
@@ -117,15 +125,21 @@ class SidePanelViewController: UIViewController,UITableViewDelegate,UITableViewD
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        let grpCount = delegate.grpList.count
+        let grpCount = delegate.grpList.count + 1
         return grpCount;
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         NSLog("\(indexPath.row)")
-        let centerVC = (delegate.window?.rootViewController?.childViewControllers[0] as! UINavigationController).viewControllers[0] as! ViewController
+        let centerVC = self.containVc.centerViewController
         NSLog("\(centerVC)")
-        centerVC.changeCell()
+        let row = indexPath.row - 1
+        if row >= 0{
+            centerVC.changeCell(indexPath.row-1)
+        } else {
+            centerVC.updateHomePost()
+        }
+        
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -134,9 +148,13 @@ class SidePanelViewController: UIViewController,UITableViewDelegate,UITableViewD
            cell = UITableViewCell(style: UITableViewCellStyle.Default, reuseIdentifier: "Cell")
         }
         cell!.backgroundColor = self.view.backgroundColor
-        let row = indexPath.row
-        NSLog("\(row):\(delegate.grpList[row].grpName)")
-        cell!.textLabel!.text = delegate.grpList[row].grpName
+        let row = indexPath.row - 1
+        if row >= 0{
+            NSLog("\(row):\(delegate.grpList[row].grpName)")
+            cell!.textLabel!.text = delegate.grpList[row].grpName
+        } else {
+            cell!.textLabel!.text = "首页"
+        }
         cell?.textLabel?.textAlignment = .Center
         return cell!
     }

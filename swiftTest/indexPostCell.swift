@@ -28,7 +28,7 @@ class indexPostCell: UITableViewCell {
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        self.backgroundColor = UIColor(red: 51/255, green: 165/255, blue: 252/255, alpha: 0.2)
+        self.backgroundColor = UIColor(red: 204/255, green: 232/255, blue: 255/255, alpha: 1)
 //        self.pname.backgroundColor = UIColor.redColor()
 //        self.author.backgroundColor = UIColor.greenColor()
 //        self.tid_sum.backgroundColor = UIColor.blueColor()

@@ -12,7 +12,7 @@ class indexDataSource: NSObject,UITableViewDataSource,UITableViewDelegate{
     var cellDate:[AnyObject]
     var cellId:String
     var configCell:((AnyObject, AnyObject) -> ())?
-    
+    let delegate = UIApplication.sharedApplication().delegate as! AppDelegate
     init(cellDate:[AnyObject], cellId:String, configureCell:(AnyObject,AnyObject) -> ()){
         self.cellDate = cellDate
         self.cellId = cellId
@@ -31,14 +31,23 @@ class indexDataSource: NSObject,UITableViewDataSource,UITableViewDelegate{
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         var cell = tableView.dequeueReusableCellWithIdentifier(self.cellId) as UITableViewCell!
         if cell == nil{
-            if self.cellId == "pCell" {
-                cell = indexPostCell(style: UITableViewCellStyle.Default, reuseIdentifier: self.cellId)
+            switch self.cellId {
+                case "pCell":
+                    cell = indexPostCell(style: UITableViewCellStyle.Default, reuseIdentifier: self.cellId)
+                case "fCell":
+                    cell = testTableViewCell(style: UITableViewCellStyle.Default, reuseIdentifier: self.cellId)
+                default:
+                    break
             }
             cell?.selectionStyle = UITableViewCellSelectionStyle.None
         }
         let rowNo = indexPath.row as Int
-        let currDate = cellDate[rowNo]
-        configCell!(cell,currDate)
+        if cellId == "pCell"{
+            configCell!(cell,cellDate[rowNo])
+        } else {
+            let currDate = delegate.frmList.valueForKey(cellDate[rowNo] as! String)
+            configCell!(cell,currDate!)
+        }
         return cell
     }
     

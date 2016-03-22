@@ -20,7 +20,7 @@ class secViewController: UIViewController,UITableViewDelegate,UITableViewDataSou
 ////            NSLog("element[%d] is %@", i+1, item[i]);
 //        }
         delegate.window?.backgroundColor = UIColor.clearColor()
-        self.view.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.5)
+        
 //        self.modalPresentationStyle = .OverCurrentContext
 //        self.modalTransitionStyle = .CrossDissolve
         let vTest = UIView(frame: CGRect(x: 0, y: 0, width: 50, height: 50))

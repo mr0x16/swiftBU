@@ -30,10 +30,7 @@ class ContainerViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        centerViewController = ViewController(style: .Plain, dSource: indexDataSource(cellDate: self.delegate.homePostList, cellId: "pCell", configureCell:{(cell, cellDate) in
-            let pCell = cell as! indexPostCell
-            pCell.configureForCell(cellDate as! postCell)
-        }))
+        centerViewController = ViewController()
         centerViewController.delegateView = self
         centerNavigationController = UINavigationController(rootViewController: centerViewController)
         view.addSubview(centerNavigationController.view)
@@ -80,7 +77,7 @@ extension ContainerViewController: ViewControllerDelegate{
             if(tempLeft != nil) {
                 leftViewController = tempLeft
             } else {
-                leftViewController = SidePanelViewController()
+                leftViewController = SidePanelViewController(center: self)
             }
             addChildSidePanelController(leftViewController!)
         }

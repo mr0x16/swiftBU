@@ -20,7 +20,7 @@ class testTableViewCell: UITableViewCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         self.addSubview(mainLab)
         self.addSubview(rightLab)
-        self.backgroundColor = UIColor(red: 51/255, green: 165/255, blue: 252/255, alpha: 0.2)
+        self.backgroundColor = UIColor(red: 204/255, green: 232/255, blue: 255/255, alpha: 1)
         rightLab.font = UIFont.systemFontOfSize(10)
         rightLab.numberOfLines = 0
         rightLab.textColor = UIColor.grayColor()
@@ -31,12 +31,16 @@ class testTableViewCell: UITableViewCell {
             make.height.equalTo(50)
         }
         
-        
         rightLab.snp_makeConstraints { (make) -> Void in
             make.centerY.equalTo(self.snp_centerY)
             make.left.equalTo(mainLab.snp_right).offset(20)
             make.right.equalTo(self).offset(-30)
         }
+    }
+    
+    func configureForCell(item: forumCell){
+        self.mainLab.text = item.valueForKey("frmName") as? String
+        self.rightLab.text = item.valueForKey("desc") as? String
     }
     
     required init(coder aDecoder: NSCoder)

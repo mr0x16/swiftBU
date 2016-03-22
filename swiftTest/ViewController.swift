@@ -34,27 +34,13 @@ class ViewController: UITableViewController{
     private var mycontext = 0
     let modalView = secViewController()
     var dateSource = NSObject()
-//    var dataKind = ""
-    
-    override func awakeFromNib() {
-        super.awakeFromNib()
-    }
-    
-    init(style: UITableViewStyle, dSource:NSObject) {
-        super.init(style: style)
-        self.dateSource = dSource
-    }
-
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        self.view.backgroundColor = UIColor(red: 204/255, green: 232/255, blue: 255/255, alpha: 1)
         modalView.modalPresentationStyle = .OverCurrentContext
         modalView.modalTransitionStyle = .CrossDissolve
-        
+        modalView.view.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.5)
         
         self.tableView.rowHeight = UITableViewAutomaticDimension
         self.tableView.estimatedRowHeight = 100
@@ -79,6 +65,7 @@ class ViewController: UITableViewController{
             segueSetting()
         } else {
             self.presentViewController(modalView, animated: true, completion: nil)
+//            userLog()
         }
     }
     
@@ -94,27 +81,59 @@ class ViewController: UITableViewController{
             if stateCount == 4 {
                 self.dismissViewControllerAnimated(true, completion: nil)
 //                NSLog("执行刷新")
-                self.setUpCell()
+                self.setUpCell("pCell",local: 0)
             }
         }
     }
     
-    func setUpCell(){
+    func setUpCell(cId:String, local:Int){
+        switch cId {
+            case "pCell":
+                self.dateSource = indexDataSource(cellDate: self.delegate.homePostList, cellId: cId, configureCell:{(cell, cellDate) in
+                    let pCell = cell as! indexPostCell
+                    pCell.configureForCell(cellDate as! postCell)
+                })
+            case "fCell":
+                
+                self.dateSource = indexDataSource(cellDate: self.delegate.grpList[local].frmArray as [AnyObject], cellId: cId, configureCell:{(cell, cellDate) in
+                    let pCell = cell as! testTableViewCell
+                    pCell.configureForCell(cellDate as! forumCell)
+                })
+            default:
+                 break
+        }
         
         self.tableView.dataSource = dateSource as! indexDataSource
         self.tableView.delegate = dateSource as! indexDataSource
+        
         self.tableView.reloadData()
-        let diff = 0.015
-        let cells:[indexPostCell] = self.tableView.visibleCells as! [indexPostCell]
-        for cell in cells{
-            cell.transform = CGAffineTransformMakeTranslation(UIScreen.mainScreen().bounds.width, 0)
-        }
-        for i in 0..<cells.count {
-            let cell:indexPostCell = cells[i] as indexPostCell
-            let delay = diff*Double(i)
-            UIView.animateWithDuration(1, delay: delay, options: UIViewAnimationOptions.AllowAnimatedContent, animations: { () -> Void in
-                cell.transform = CGAffineTransformMakeTranslation(0, 0)
-                }, completion: nil)
+        
+        if cId == "pCell"{
+            let diff = 0.005
+            let cells:[indexPostCell] = self.tableView.visibleCells as! [indexPostCell]
+            for cell in cells{
+                cell.transform = CGAffineTransformMakeTranslation(UIScreen.mainScreen().bounds.width, 0)
+            }
+            for i in 0..<cells.count {
+                let cell:indexPostCell = cells[i] as indexPostCell
+                let delay = diff*Double(i)
+                UIView.animateWithDuration(1, delay: delay, options: UIViewAnimationOptions.AllowAnimatedContent, animations: { () -> Void in
+                    cell.transform = CGAffineTransformMakeTranslation(0, 0)
+                    }, completion: nil)
+            }
+        } else {
+            let diff = 0.15
+            let cells:[testTableViewCell] = self.tableView.visibleCells as! [testTableViewCell]
+            for cell in cells{
+                cell.transform = CGAffineTransformMakeTranslation(0,0)
+            }
+            for i in 0..<cells.count {
+                let cell:testTableViewCell = cells[i] as testTableViewCell
+                let delay = diff*Double(i)
+                UIView.animateWithDuration(1, delay: delay, options: UIViewAnimationOptions.AllowAnimatedContent, animations: { () -> Void in
+                    cell.transform = CGAffineTransformMakeTranslation(0, 0)
+                    }, completion: nil)
+            }
         }
     }
     
@@ -123,9 +142,16 @@ class ViewController: UITableViewController{
         delegateView?.toggleLeftPanel()
     }
     
-    func changeCell(){
+    func updateHomePost(){
+        self.presentViewController(modalView, animated: true, completion: nil)
+        self.leftButton()
+        self.getHome()
+    }
+    
+    func changeCell(local:Int){
         NSLog("call change")
         self.leftButton()
+        self.setUpCell("fCell",local: local)
     }
     
     func segueSetting()->Void {
@@ -192,6 +218,10 @@ class ViewController: UITableViewController{
                         pname = (post.valueForKey("pname")!.stringByRemovingPercentEncoding!)!
                         let p = postCell(author: author, fid: fid, tid: tid, tid_sum: tid_sum, pname: pname, when: when)
                         self.delegate.homePostList.append(p)
+                        if self.stateCount >= 4{
+                            self.setUpCell("pCell", local: 0)
+                            self.dismissViewControllerAnimated(true, completion: nil)
+                        }
                     }
                     self.stateCount++
                 }
