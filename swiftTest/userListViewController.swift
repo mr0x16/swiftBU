@@ -55,6 +55,10 @@ class userListViewController: UITableViewController{
         self.pTran.paramsSet("userName", value: name)
         self.pTran.paramsSet("passWord", value: key)
         let rootView = ContainerViewController()
+        delegate.grpList.removeAll()
+        delegate.frmList.removeAllObjects()
+        delegate.subList.removeAllObjects()
+        delegate.image = UIImage()
         navigationController?.presentViewController(rootView, animated: true, completion: { () -> Void in
             NSLog("present success!")
         })

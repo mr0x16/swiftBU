@@ -62,9 +62,10 @@ class ViewController: UITableViewController{
     override func viewDidAppear(animated: Bool) {
 //        NSLog("**********%@***********",self.delegate.strDate as String)
         if delegate.getData().nums == 0 {
+            self.navigationItem.leftBarButtonItem?.enabled = false
             segueSetting()
         } else {
-            self.presentViewController(modalView, animated: true, completion: nil)
+//            self.presentViewController(modalView, animated: true, completion: nil)
 //            userLog()
         }
     }
@@ -79,7 +80,7 @@ class ViewController: UITableViewController{
     override func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: [String : AnyObject]?, context: UnsafeMutablePointer<Void>) {
         if(context == &mycontext){
             if stateCount == 4 {
-                self.dismissViewControllerAnimated(true, completion: nil)
+                modalView.dismissViewControllerAnimated(true, completion: nil)
 //                NSLog("执行刷新")
                 self.setUpCell("pCell",local: 0)
             }
@@ -169,6 +170,7 @@ class ViewController: UITableViewController{
 
     
     func userLog(){
+        self.presentViewController(modalView, animated: true, completion: nil)
         delegate.login()!.responseJSON{ response in
             if response.result.isSuccess {
                 let body = response.result.value as! NSDictionary
@@ -187,6 +189,7 @@ class ViewController: UITableViewController{
                     threadFrm.start()
                 } else {
                     let msg = body.valueForKey("msg") as! String
+                    self.dismissViewControllerAnimated(true, completion: nil)
                     NSLog("*****论坛登录失败:\(msg)******")
                 }
             } else {
@@ -220,7 +223,7 @@ class ViewController: UITableViewController{
                         self.delegate.homePostList.append(p)
                         if self.stateCount >= 4{
                             self.setUpCell("pCell", local: 0)
-                            self.dismissViewControllerAnimated(true, completion: nil)
+                            self.modalView.dismissViewControllerAnimated(true, completion: nil)
                         }
                     }
                     self.stateCount++

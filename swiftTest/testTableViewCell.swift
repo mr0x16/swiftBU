@@ -9,8 +9,10 @@
 import UIKit
 
 class testTableViewCell: UITableViewCell {
+    let title = UIView()
+    let desc = UIView()
     let mainLab = UILabel()
-    let rightLab = UILabel()
+    let descLab = UILabel()
     override func awakeFromNib() {
         super.awakeFromNib()
     }
@@ -18,29 +20,43 @@ class testTableViewCell: UITableViewCell {
     override init(style: UITableViewCellStyle, reuseIdentifier: String?)
     {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        self.addSubview(mainLab)
-        self.addSubview(rightLab)
         self.backgroundColor = UIColor(red: 204/255, green: 232/255, blue: 255/255, alpha: 1)
-        rightLab.font = UIFont.systemFontOfSize(10)
-        rightLab.numberOfLines = 0
-        rightLab.textColor = UIColor.grayColor()
-        self.bounds.size = CGSizeMake(UIScreen.mainScreen().bounds.width, 75)
+        contentView.addSubview(title)
+        contentView.addSubview(desc)
+        
+        title.snp_makeConstraints { (make) -> Void in
+            make.top.equalTo(contentView.snp_top).offset(15)
+            make.centerX.equalTo(contentView.snp_centerX)
+        }
+        mainLab.sizeToFit()
+        mainLab.font = UIFont.systemFontOfSize(16)
+        title.addSubview(mainLab)
         mainLab.snp_makeConstraints { (make) -> Void in
-            make.centerY.equalTo(self.snp_centerY)
-            make.left.equalTo(self).offset(20)
-            make.height.equalTo(50)
+            make.edges.equalTo(title).inset(UIEdgeInsetsZero)
         }
         
-        rightLab.snp_makeConstraints { (make) -> Void in
-            make.centerY.equalTo(self.snp_centerY)
-            make.left.equalTo(mainLab.snp_right).offset(20)
-            make.right.equalTo(self).offset(-30)
+        desc.snp_makeConstraints { (make) -> Void in
+            make.top.equalTo(title.snp_bottom)
+            make.left.equalTo(contentView.snp_left).offset(25)
+            make.right.equalTo(contentView.snp_right).offset(-25)
         }
+        descLab.sizeToFit()
+        descLab.textAlignment = .Center
+        descLab.textColor = UIColor.grayColor()
+        descLab.lineBreakMode = NSLineBreakMode.ByWordWrapping
+        descLab.font = UIFont.systemFontOfSize(8)
+        descLab.numberOfLines = 2
+        desc.addSubview(descLab)
+        descLab.snp_makeConstraints { (make) -> Void in
+            make.edges.equalTo(desc).inset(UIEdgeInsetsZero)
+        }
+        
+        
     }
     
     func configureForCell(item: forumCell){
         self.mainLab.text = item.valueForKey("frmName") as? String
-        self.rightLab.text = item.valueForKey("desc") as? String
+        self.descLab.text = item.valueForKey("desc") as? String
     }
     
     required init(coder aDecoder: NSCoder)

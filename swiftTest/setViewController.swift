@@ -121,8 +121,14 @@ class setViewController: UIViewController,UITextFieldDelegate {
         }
         
         NSLog("******All Data: \(userData.nums)******")
-        
-        navigationController?.popViewControllerAnimated(true)
+        let rootView = ContainerViewController()
+        delegate.grpList.removeAll()
+        delegate.frmList.removeAllObjects()
+        delegate.subList.removeAllObjects()
+        delegate.image = UIImage()
+        navigationController?.presentViewController(rootView, animated: true, completion: { () -> Void in
+            NSLog("present success!")
+        })
     }
     /*
     // MARK: - Navigation

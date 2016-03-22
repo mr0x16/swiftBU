@@ -77,7 +77,7 @@ extension ContainerViewController: ViewControllerDelegate{
             if(tempLeft != nil) {
                 leftViewController = tempLeft
             } else {
-                leftViewController = SidePanelViewController(center: self)
+                leftViewController = SidePanelViewController(center: self.centerViewController)
             }
             addChildSidePanelController(leftViewController!)
         }

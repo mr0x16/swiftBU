@@ -17,11 +17,11 @@ class SidePanelViewController: UIViewController,UITableViewDelegate,UITableViewD
     let delegate = (UIApplication.sharedApplication().delegate) as! AppDelegate
     let pTran = paramsTrans()
     let avatar = UIImageView(frame: CGRectZero)
-    var containVc = ContainerViewController()
+    var centerVc = ViewController()
     
-    convenience init(center:ContainerViewController){
+    convenience init(center:ViewController){
         self.init()
-        self.containVc = center
+        self.centerVc = center
     }
     
     override func viewDidLoad() {
@@ -110,7 +110,7 @@ class SidePanelViewController: UIViewController,UITableViewDelegate,UITableViewD
         let nv = UINavigationController(rootViewController: setView)
         nv.modalTransitionStyle = .CrossDissolve
         self.presentViewController(nv, animated: true) { () -> Void in
-            
+            self.centerVc.leftButton()
         }
         
     }
@@ -131,13 +131,12 @@ class SidePanelViewController: UIViewController,UITableViewDelegate,UITableViewD
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         NSLog("\(indexPath.row)")
-        let centerVC = self.containVc.centerViewController
-        NSLog("\(centerVC)")
+        NSLog("\(self.centerVc)")
         let row = indexPath.row - 1
         if row >= 0{
-            centerVC.changeCell(indexPath.row-1)
+            centerVc.changeCell(indexPath.row-1)
         } else {
-            centerVC.updateHomePost()
+            centerVc.updateHomePost()
         }
         
     }

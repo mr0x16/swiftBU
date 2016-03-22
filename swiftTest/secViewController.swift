@@ -8,7 +8,7 @@
 
 import UIKit
 
-class secViewController: UIViewController,UITableViewDelegate,UITableViewDataSource {
+class secViewController: UIViewController{
     var item: [NSString] = [NSString]();
     let delegate = (UIApplication.sharedApplication().delegate) as! AppDelegate
     override func viewDidLoad() {
@@ -42,28 +42,9 @@ class secViewController: UIViewController,UITableViewDelegate,UITableViewDataSou
         // Do any additional setup after loading the view.
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.item.count;
-    }
+//    override func dismissModalViewControllerAnimated(animated: Bool) {
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath)
-        let row = indexPath.row
-        cell.textLabel!.text = item[row] as String
-        return cell
-    }
-    
-//    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-//        var vc = secViewController()
-//        navigationController?.presentViewController(vc, animated: true, completion: { () -> Void in
-//            NSLog("Success!")
-//        })
 //    }
-    
-    func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-//        let row = indexPath.row
-        
-    }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
