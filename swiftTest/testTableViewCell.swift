@@ -13,6 +13,7 @@ class testTableViewCell: UITableViewCell {
     let desc = UIView()
     let mainLab = UILabel()
     let descLab = UILabel()
+    var fid = ""
     override func awakeFromNib() {
         super.awakeFromNib()
     }
@@ -57,6 +58,7 @@ class testTableViewCell: UITableViewCell {
     func configureForCell(item: forumCell){
         self.mainLab.text = item.valueForKey("frmName") as? String
         self.descLab.text = item.valueForKey("desc") as? String
+        self.fid = item.fid
     }
     
     required init(coder aDecoder: NSCoder)

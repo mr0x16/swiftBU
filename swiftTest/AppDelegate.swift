@@ -17,10 +17,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     let urlHead = "http://out.bitunion.org/open_api/"
     var grpList = [groupCell]()
     var homePostList = [postCell]()
+//    var threadPostList = [postCell]()
     var frmList = NSMutableDictionary()
     var subList = NSMutableDictionary()
     var currFrmId:String = ""
     var image : UIImage?
+//    var currentVc = ViewController()
 //    var request:Request
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
 //        self.login()
@@ -103,6 +105,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let urlStr = urlHead + "bu_thread.php"
         return Alamofire.request(.POST,urlStr,parameters:["action":"thread","username":username,"session":session,"fid":self.currFrmId,"from":"\(begin)","to":"\(end)"],encoding:ParameterEncoding.JSON )
     }
+    
     
     func indexPost() ->Request? {
         let username = self.pTran.paramsGet("userName")

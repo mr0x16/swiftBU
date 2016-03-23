@@ -19,7 +19,7 @@ class secViewController: UIViewController{
 //            item.append("test\(i)");
 ////            NSLog("element[%d] is %@", i+1, item[i]);
 //        }
-        delegate.window?.backgroundColor = UIColor.clearColor()
+        delegate.window?.backgroundColor = UIColor(red: 204/255, green: 232/255, blue: 255/255, alpha: 1)
         
 //        self.modalPresentationStyle = .OverCurrentContext
 //        self.modalTransitionStyle = .CrossDissolve

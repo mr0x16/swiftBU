@@ -40,7 +40,7 @@ class ViewController: UITableViewController{
         self.view.backgroundColor = UIColor(red: 204/255, green: 232/255, blue: 255/255, alpha: 1)
         modalView.modalPresentationStyle = .OverCurrentContext
         modalView.modalTransitionStyle = .CrossDissolve
-        modalView.view.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.5)
+//        modalView.view.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.5)
         
         self.tableView.rowHeight = UITableViewAutomaticDimension
         self.tableView.estimatedRowHeight = 100
@@ -90,13 +90,13 @@ class ViewController: UITableViewController{
     func setUpCell(cId:String, local:Int){
         switch cId {
             case "pCell":
-                self.dateSource = indexDataSource(cellDate: self.delegate.homePostList, cellId: cId, configureCell:{(cell, cellDate) in
+                self.dateSource = indexDataSource(centerVc: self, cellDate: self.delegate.homePostList, cellId: cId, configureCell:{(cell, cellDate) in
                     let pCell = cell as! indexPostCell
                     pCell.configureForCell(cellDate as! postCell)
                 })
             case "fCell":
                 
-                self.dateSource = indexDataSource(cellDate: self.delegate.grpList[local].frmArray as [AnyObject], cellId: cId, configureCell:{(cell, cellDate) in
+                self.dateSource = indexDataSource(centerVc: self,cellDate: self.delegate.grpList[local].frmArray as [AnyObject], cellId: cId, configureCell:{(cell, cellDate) in
                     let pCell = cell as! testTableViewCell
                     pCell.configureForCell(cellDate as! forumCell)
                 })

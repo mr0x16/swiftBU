@@ -99,6 +99,9 @@ class indexPostCell: UITableViewCell {
         self.aLabel.text = "发帖人: \(item.author)"
         self.tLabel.text = "回复数: \(item.tid_sum)"
         self.wLabel.text = "最后回复: \(item.when)"
+//        if item.when == "unknown" {
+//            when.removeFromSuperview()
+//        }
     }
     
     required init?(coder aDecoder: NSCoder) {

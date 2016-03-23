@@ -13,10 +13,12 @@ class indexDataSource: NSObject,UITableViewDataSource,UITableViewDelegate{
     var cellId:String
     var configCell:((AnyObject, AnyObject) -> ())?
     let delegate = UIApplication.sharedApplication().delegate as! AppDelegate
-    init(cellDate:[AnyObject], cellId:String, configureCell:(AnyObject,AnyObject) -> ()){
+    let centerView:UIViewController
+    init(centerVc:UIViewController,cellDate:[AnyObject], cellId:String, configureCell:(AnyObject,AnyObject) -> ()){
         self.cellDate = cellDate
         self.cellId = cellId
         self.configCell = configureCell
+        self.centerView = centerVc
         super.init()
     }
     
@@ -52,6 +54,17 @@ class indexDataSource: NSObject,UITableViewDataSource,UITableViewDelegate{
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        NSLog("selected \(indexPath.row)")
+        if cellId == "pCell" {
+            NSLog("selected \(indexPath.row) post")
+        } else {
+            NSLog("selected \(indexPath.row) forum")
+            let rowNo = indexPath.row as Int
+            let currDate = delegate.frmList.valueForKey(cellDate[rowNo] as! String) as! forumCell
+            NSLog("fid is \(currDate.fid)")
+            delegate.currFrmId = currDate.fid
+            let threadView = threadViewController()
+            centerView.navigationController?.pushViewController(threadView, animated: true)
+        }
+        
     }
 }
