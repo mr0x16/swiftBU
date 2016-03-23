@@ -81,7 +81,7 @@ class SidePanelViewController: UIViewController,UITableViewDelegate,UITableViewD
 
         btnSetting.setTitle("设置", forState: .Normal)
         btnSetting.setTitleColor(UIColor.blackColor(), forState: .Normal)
-        btnSetting.addTarget(self, action: "segueSetting", forControlEvents: .TouchUpInside)
+        btnSetting.addTarget(self, action: #selector(SidePanelViewController.segueSetting), forControlEvents: .TouchUpInside)
         
         avatar.image = delegate.image
         list.registerClass(UITableViewCell.self, forCellReuseIdentifier: "Cell")

@@ -40,7 +40,7 @@ class ViewController: UITableViewController{
         self.view.backgroundColor = UIColor(red: 204/255, green: 232/255, blue: 255/255, alpha: 1)
         modalView.modalPresentationStyle = .OverCurrentContext
         modalView.modalTransitionStyle = .CrossDissolve
-//        modalView.view.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.5)
+        modalView.view.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.5)
         
         self.tableView.rowHeight = UITableViewAutomaticDimension
         self.tableView.estimatedRowHeight = 100
@@ -49,7 +49,7 @@ class ViewController: UITableViewController{
         NSLog("---\(self.classForCoder):加载成功---")   //转跳成功日志
         self.title = "BU"
 //        self.tableView.dequeueReusableCellWithIdentifier("pCell")
-        let left = UIBarButtonItem(title: "Left", style: .Plain, target: self, action: Selector("leftButton"))
+        let left = UIBarButtonItem(title: "Left", style: .Plain, target: self, action: #selector(ViewController.leftButton))
         self.navigationItem.leftBarButtonItem = left
         self.addObserver(self, forKeyPath: "stateCount", options: .New, context:&mycontext)
         if delegate.getData().nums != 0{
@@ -64,9 +64,6 @@ class ViewController: UITableViewController{
         if delegate.getData().nums == 0 {
             self.navigationItem.leftBarButtonItem?.enabled = false
             segueSetting()
-        } else {
-//            self.presentViewController(modalView, animated: true, completion: nil)
-//            userLog()
         }
     }
     
@@ -180,10 +177,10 @@ class ViewController: UITableViewController{
                     self.pTran.paramsSet("uid", value: body.valueForKey("uid")!)
                     self.pTran.paramsSet("status", value: body.valueForKey("status")!)
                     self.pTran.paramsSet("credit", value: body.valueForKey("credit")!)
-                    self.stateCount++
-                    let threadIndex = NSThread(target: self, selector: "getHome", object: nil)
-                    let threadInfo = NSThread(target: self, selector: "userInfo", object: nil)
-                    let threadFrm = NSThread(target: self, selector: "listFrm", object: nil)
+                    self.stateCount += 1
+                    let threadIndex = NSThread(target: self, selector: #selector(ViewController.getHome), object: nil)
+                    let threadInfo = NSThread(target: self, selector: #selector(ViewController.userInfo), object: nil)
+                    let threadFrm = NSThread(target: self, selector: #selector(ViewController.listFrm), object: nil)
                     threadIndex.start()
                     threadInfo.start()
                     threadFrm.start()
@@ -226,7 +223,7 @@ class ViewController: UITableViewController{
                             self.modalView.dismissViewControllerAnimated(true, completion: nil)
                         }
                     }
-                    self.stateCount++
+                    self.stateCount += 1
                 }
             }
         }
@@ -252,7 +249,7 @@ class ViewController: UITableViewController{
                             let data = response.data!
                             self.delegate.image = UIImage(data: data)
                             NSLog("Success: %d", data.length)
-                            self.stateCount++
+                            self.stateCount += 1
                         }
                     })
                 }
@@ -310,10 +307,10 @@ class ViewController: UITableViewController{
                                     }
                                 }
                             }
-                            grpCal++
+                            grpCal += 1
                         }
                     }
-                    self.stateCount++
+                    self.stateCount += 1
                 } else {
                     let msg = body.valueForKey("msg") as! String
                     NSLog("*****获取论坛列表失败:\(msg)******")

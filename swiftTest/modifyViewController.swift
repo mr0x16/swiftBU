@@ -48,7 +48,7 @@ class modifyViewController: UIViewController, UITextFieldDelegate{
         btnSubmit.backgroundColor = UIColor(red: 0, green: 0.478, blue: 1, alpha: 1)
         btnSubmit.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
         btnSubmit.titleLabel!.font = UIFont.systemFontOfSize(25)
-        btnSubmit.addTarget(self, action: Selector("modifyData"), forControlEvents: UIControlEvents.TouchUpInside)
+        btnSubmit.addTarget(self, action: #selector(modifyViewController.modifyData), forControlEvents: UIControlEvents.TouchUpInside)
         
         view.addSubview(labName)
         view.addSubview(labKey)

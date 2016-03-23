@@ -21,9 +21,9 @@ class userListViewController: UITableViewController{
         userArray = tempArray.mutableCopy() as! NSMutableArray
         NSLog("Load: list has \(delegate.getData().nums) cells")
         
-        let addBtn = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Add, target: self, action: "segueSetting")
+        let addBtn = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Add, target: self, action: #selector(userListViewController.segueSetting))
         navigationItem.rightBarButtonItem = addBtn
-        let dimBtn = UIBarButtonItem(barButtonSystemItem: .Done, target: self, action: "done")
+        let dimBtn = UIBarButtonItem(barButtonSystemItem: .Done, target: self, action: #selector(userListViewController.done))
         navigationItem.leftBarButtonItem = dimBtn
     }
     

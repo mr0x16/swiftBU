@@ -11,6 +11,7 @@ import UIKit
 class threadViewController: UIViewController {
     let delegate = UIApplication.sharedApplication().delegate as! AppDelegate
     let modalView = secViewController()
+    let subView = subViewController()
     let tableView = UITableView()
     let collView = UIView()
     var screenWidth:CGFloat = 0
@@ -19,48 +20,46 @@ class threadViewController: UIViewController {
     var dateSource = NSObject()
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.fid = delegate.currFrmId
+        let forum = delegate.frmList.valueForKey(self.fid) as! forumCell
+        self.title = forum.frmName
         self.tableView.backgroundColor = UIColor(red: 204/255, green: 232/255, blue: 255/255, alpha: 1)
         self.view.backgroundColor = UIColor(red: 204/255, green: 232/255, blue: 255/255, alpha: 1)
+        self.screenWidth = UIScreen.mainScreen().bounds.width
+        
         modalView.modalPresentationStyle = .OverCurrentContext
         modalView.modalTransitionStyle = .CrossDissolve
+        modalView.view.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.5)
+        subView.modalPresentationStyle = .OverCurrentContext
+        subView.modalTransitionStyle = .CrossDissolve
+        subView.view.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.5)
         
-        self.screenWidth = UIScreen.mainScreen().bounds.width
-        self.collHeight = self.screenWidth/3
-        self.fid = delegate.currFrmId
+        if forum.subArray.count != 0 {
+            let subArea = UIBarButtonItem(title: "子版块", style: .Plain, target: self, action: #selector(threadViewController.enterSubArea))
+            self.navigationItem.rightBarButtonItem = subArea
+        }
+
+        self.collHeight = self.screenWidth/4
         self.tableView.rowHeight = UITableViewAutomaticDimension
         self.tableView.estimatedRowHeight = 100
         self.tableView.separatorStyle = UITableViewCellSeparatorStyle.None
-        let forum = delegate.frmList.valueForKey(self.fid) as! forumCell
-        self.title = forum.frmName
         delegate.homePostList.removeAll()
-//        if forum.subArray.count > 3 {
-//            
-//        }
-        collView.backgroundColor = UIColor.grayColor()
-        self.view.addSubview(collView)
-        collView.snp_makeConstraints { (make) -> Void in
-            make.top.equalTo(view.snp_top).offset(64)
-            make.left.equalTo(view.snp_left)
-            make.right.equalTo(view.snp_right)
-            make.height.equalTo(collHeight)
-        }
         self.view.addSubview(tableView)
         tableView.snp_makeConstraints { (make) -> Void in
-            make.top.equalTo(collView.snp_bottom)
-            make.left.equalTo(view.snp_left)
-            make.right.equalTo(view.snp_right)
-            make.bottom.equalTo(view.snp_bottom)
+            make.edges.equalTo(view).inset(UIEdgeInsetsZero)
         }
-        view.backgroundColor = UIColor(red: 204/255, green: 232/255, blue: 255/255, alpha: 1)
         self.presentViewController(modalView, animated: true, completion:{ () -> Void in
             self.getPost(0,step: 15)
         })
         // Do any additional setup after loading the view.
     }
     
+    func enterSubArea() {
+        self.presentViewController(subView, animated: true, completion: nil)
+    }
+    
     func getPost(begin:Int, step:Int){
         let end = begin + step
-//        delegate.homePostList.removeAll()
         delegate.listPosts(begin, end: end)!.responseJSON(completionHandler: { (response) -> Void in
             if response.result.isSuccess {
                 let body = response.result.value as! NSDictionary
