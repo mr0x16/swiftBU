@@ -9,10 +9,12 @@
 import UIKit
 
 class subCell: NSObject {
-    var subName: String
+    var frmName: String
     var fid: String
-    init(subName: String, fid: String) {
-        self.subName = subName
+    var desc: String
+    init(frmName: String, fid: String, desc: String) {
+        self.frmName = frmName
         self.fid = fid
+        self.desc = desc
     }
 }

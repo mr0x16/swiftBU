@@ -299,7 +299,8 @@ class ViewController: UITableViewController{
                                         for sub in subArray{
                                             forumName = (sub.valueForKey("name")?.stringByRemovingPercentEncoding)!
                                             forumId = sub.valueForKey("fid") as! String
-                                            self.delegate.subList.setValue(subCell(subName: forumName, fid: forumId), forKey: forumId)
+                                            forumDesc = (sub.valueForKey("description")?.stringByRemovingPercentEncoding)!
+                                            self.delegate.subList.setValue(subCell(frmName: forumName, fid: forumId, desc: forumDesc), forKey: forumId)
                                             (self.delegate.frmList.valueForKey(frmStr) as! forumCell).subArray.addObject(forumId)
                                             (self.delegate.frmList.valueForKey(frmStr) as! forumCell).subArray.count
 //                                            NSLog("-------SUB name is \(forumName),id is \(forumId)")

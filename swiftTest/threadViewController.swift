@@ -33,6 +33,7 @@ class threadViewController: UIViewController {
         subView.modalPresentationStyle = .OverCurrentContext
         subView.modalTransitionStyle = .CrossDissolve
         subView.view.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.5)
+        subView.delegateView = self
         
         if forum.subArray.count != 0 {
             let subArea = UIBarButtonItem(title: "子版块", style: .Plain, target: self, action: #selector(threadViewController.enterSubArea))
@@ -49,6 +50,7 @@ class threadViewController: UIViewController {
             make.edges.equalTo(view).inset(UIEdgeInsetsZero)
         }
         self.presentViewController(modalView, animated: true, completion:{ () -> Void in
+            self.delegate.homePostList.removeAll()
             self.getPost(0,step: 15)
         })
         // Do any additional setup after loading the view.
@@ -64,7 +66,7 @@ class threadViewController: UIViewController {
             if response.result.isSuccess {
                 let body = response.result.value as! NSDictionary
                 if body.valueForKey("result") as! String == "success"{
-                    NSLog("*****获取forum成功******")
+                    NSLog("*****获取forum成功--fid is \(self.delegate.currFrmId)******")
                     var author:String
                     var fid:String
                     var tid:String
@@ -73,7 +75,7 @@ class threadViewController: UIViewController {
                     var when:String
                     for post in body.valueForKey("threadlist") as! NSArray {
                         author = (post.valueForKey("author")!.stringByRemovingPercentEncoding!)!
-                        fid = self.fid
+                        fid = self.delegate.currFrmId
                         tid = post.valueForKey("tid") as! String
                         tid_sum = post.valueForKey("replies") as! String
                         when = "unknown"//(post.valueForKey("lastpost")!.stringByRemovingPercentEncoding!)!
@@ -89,6 +91,7 @@ class threadViewController: UIViewController {
                 NSLog("Unresolved error \(nserror), \(nserror.userInfo)")
             }
             self.dismissViewControllerAnimated(true, completion: { () -> Void in
+                self.delegate.currFrmId = self.fid
                 NSLog("dismiss Done")
             })
         })
@@ -120,4 +123,18 @@ class threadViewController: UIViewController {
     }
     */
 
+}
+
+extension threadViewController: subViewDelegate{
+    func foo(fid:String) {
+        NSLog("Delegate success---subfid is \(fid) !")
+        NSLog("Delegate success---forumfid is \(self.fid)")
+        delegate.currFrmId = fid
+        let forum = delegate.subList.valueForKey(delegate.currFrmId) as! subCell
+        self.title = forum.frmName
+        self.presentViewController(modalView, animated: true, completion:{ () -> Void in
+            self.delegate.homePostList.removeAll()
+            self.getPost(0,step: 15)
+        })
+    }
 }

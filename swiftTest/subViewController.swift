@@ -8,43 +8,96 @@
 
 import UIKit
 
-class subViewController: UIViewController {
+protocol subViewDelegate {
+    func foo(fid:String)
+}
 
+class subViewController: UIViewController, UITableViewDelegate, UITableViewDataSource{
+    let delegate = UIApplication.sharedApplication().delegate as! AppDelegate
+    var delegateView:subViewDelegate?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        let xGap = UIScreen.mainScreen().bounds.width/5
-        let yGap = UIScreen.mainScreen().bounds.height/5
+        let xGap = UIScreen.mainScreen().bounds.width/7
+        let yGap = UIScreen.mainScreen().bounds.height/7
         
         
         let delegate = (UIApplication.sharedApplication().delegate) as! AppDelegate
         delegate.window?.backgroundColor = UIColor(red: 204/255, green: 232/255, blue: 255/255, alpha: 1)
     
         
-        let containView = UIView()
-        self.view.addSubview(containView)
-        containView.backgroundColor = UIColor(red: 204/255, green: 232/255, blue: 255/255, alpha: 1)
-        containView.snp_makeConstraints { (make) -> Void in
-            make.center.equalTo(view.snp_center)
+//        let containView = UIView()
+        
+//        containView.backgroundColor = UIColor(red: 204/255, green: 232/255, blue: 255/255, alpha: 1)
+//        self.view.addSubview(containView)
+        let tableView = UITableView()
+        tableView.rowHeight = UITableViewAutomaticDimension
+        tableView.estimatedRowHeight = 100
+        tableView.separatorStyle = UITableViewCellSeparatorStyle.None
+        tableView.backgroundColor = UIColor.whiteColor()
+        view.addSubview(tableView)
+        tableView.registerClass(testTableViewCell.self, forCellReuseIdentifier: "fCell")
+        let cell = UITableViewCell(style: .Default, reuseIdentifier: "fCell")
+        let cellNum = CGFloat((delegate.frmList.valueForKey(delegate.currFrmId) as! forumCell).subArray.count)
+        tableView.snp_makeConstraints { (make) in
+            make.centerX.equalTo(view.snp_centerX)
+            make.centerY.equalTo(view.snp_centerY).offset(-yGap/4)
             make.left.equalTo(view.snp_left).offset(xGap)
             make.right.equalTo(view.snp_right).offset(-xGap)
-            make.top.equalTo(view.snp_top).offset(yGap)
-            make.bottom.equalTo(view.snp_bottom).offset(-yGap)
+            make.height.equalTo(cell.frame.height * cellNum)
         }
         
+        tableView.dataSource = self
+        tableView.delegate = self
         
         let btnCancel = UIButton(type: .System)
         btnCancel.setTitle("返回", forState: .Normal)
         btnCancel.setTitleColor(UIColor.blackColor(), forState: .Normal)
         btnCancel.addTarget(self, action: #selector(subViewController.cancelView), forControlEvents: .TouchUpInside)
         btnCancel.backgroundColor = UIColor(red: 204/255, green: 232/255, blue: 255/255, alpha: 1)
-        containView.addSubview(btnCancel)
+        view.addSubview(btnCancel)
         btnCancel.snp_makeConstraints { (make) in
-            make.left.equalTo(containView.snp_left)
-            make.right.equalTo(containView.snp_right)
-            make.bottom.equalTo(containView.snp_bottom)
+            make.left.equalTo(view.snp_left).offset(xGap)
+            make.right.equalTo(view.snp_right).offset(-xGap)
+            make.top.equalTo(tableView.snp_bottom)
             make.height.equalTo(yGap/2)
         }
+        
+//        containView.snp_makeConstraints { (make) -> Void in
+//            make.center.equalTo(view.snp_center)
+//            make.top.equalTo(tableView.snp_top)
+//            make.left.equalTo(view.snp_left).offset(xGap)
+//            make.right.equalTo(view.snp_right).offset(-xGap)
+//        }
         // Do any additional setup after loading the view.
+    }
+    
+    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        return 1
+    }
+    
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+//        var fid = delegate
+        return (delegate.frmList.valueForKey(delegate.currFrmId) as! forumCell).subArray.count
+    }
+    
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCellWithIdentifier("fCell") as! testTableViewCell
+        let row = indexPath.row
+        let subId = (delegate.frmList.valueForKey(delegate.currFrmId) as! forumCell).subArray.objectAtIndex(row) as! String
+        let currDate = delegate.subList.valueForKey(subId) as! subCell
+        cell.mainLab.text = currDate.frmName
+        cell.descLab.text = currDate.desc
+        cell.fid = currDate.fid
+        return cell
+    }
+    
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        let row = indexPath.row
+        let subId = (delegate.frmList.valueForKey(delegate.currFrmId) as! forumCell).subArray.objectAtIndex(row) as! String
+        self.dismissViewControllerAnimated(true, completion:{ () -> Void in
+            self.delegateView?.foo(subId)
+        })
     }
     
     func cancelView() -> Void {
