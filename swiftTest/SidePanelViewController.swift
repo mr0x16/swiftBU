@@ -135,8 +135,10 @@ class SidePanelViewController: UIViewController,UITableViewDelegate,UITableViewD
         let row = indexPath.row - 1
         if row >= 0{
             centerVc.changeCell(indexPath.row-1)
+            centerVc.title = delegate.grpList[row].grpName
         } else {
             centerVc.updateHomePost()
+            centerVc.title = "BU"
         }
         
     }
