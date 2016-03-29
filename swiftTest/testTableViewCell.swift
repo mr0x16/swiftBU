@@ -30,8 +30,9 @@ class testTableViewCell: UITableViewCell {
             make.centerX.equalTo(contentView.snp_centerX)
         }
         mainLab.sizeToFit()
-        mainLab.font = UIFont.systemFontOfSize(16)
+//        mainLab.font = UIFont.systemFontOfSize(16)
         title.addSubview(mainLab)
+        mainLab.backgroundColor = UIColor.redColor()
         mainLab.snp_makeConstraints { (make) -> Void in
             make.edges.equalTo(title).inset(UIEdgeInsetsZero)
         }
@@ -56,7 +57,18 @@ class testTableViewCell: UITableViewCell {
     }
     
     func configureForCell(item: forumCell){
-        self.mainLab.text = item.valueForKey("frmName") as? String
+        let titel = item.valueForKey("frmName") as? String
+        NSLog("Titel is \(titel)")
+        let encodedData = titel!.dataUsingEncoding(NSUTF8StringEncoding)!
+        let attributedOptions = [NSDocumentTypeDocumentAttribute:NSHTMLTextDocumentType]
+        do{
+            let attributeString = try NSAttributedString(data: encodedData, options: attributedOptions, documentAttributes: nil)
+            self.mainLab.attributedText = attributeString
+            
+        } catch {
+            print("Cannot create attributed String")
+        }
+            //.text = item.valueForKey("frmName") as? String
         self.descLab.text = item.valueForKey("desc") as? String
         self.fid = item.fid
     }

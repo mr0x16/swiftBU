@@ -86,7 +86,17 @@ class subViewController: UIViewController, UITableViewDelegate, UITableViewDataS
         let row = indexPath.row
         let subId = (delegate.frmList.valueForKey(delegate.currFrmId) as! forumCell).subArray.objectAtIndex(row) as! String
         let currDate = delegate.subList.valueForKey(subId) as! subCell
-        cell.mainLab.text = currDate.frmName
+        NSLog("Titel is \(currDate.frmName)")
+        let encodedData = currDate.frmName.dataUsingEncoding(NSUTF8StringEncoding)!
+        let attributedOptions = [NSDocumentTypeDocumentAttribute:NSHTMLTextDocumentType]
+        do{
+            let attributeString = try NSAttributedString(data: encodedData, options: attributedOptions, documentAttributes: nil)
+            NSLog("attributedText is \(attributeString)")
+            cell.mainLab.attributedText = attributeString
+            
+        } catch {
+            print("Cannot create attributed String")
+        }
         cell.descLab.text = currDate.desc
         cell.fid = currDate.fid
         return cell
