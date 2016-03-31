@@ -126,12 +126,12 @@ class threadViewController: UIViewController {
 }
 
 extension threadViewController: subViewDelegate{
-    func foo(fid:String) {
+    func foo(fid:String, title:String) {
         NSLog("Delegate success---subfid is \(fid) !")
         NSLog("Delegate success---forumfid is \(self.fid)")
         delegate.currFrmId = fid
-        let forum = delegate.subList.valueForKey(delegate.currFrmId) as! subCell
-        self.title = forum.frmName
+//        let forum = delegate.subList.valueForKey(delegate.currFrmId) as! subCell
+        self.title = title
         self.presentViewController(modalView, animated: true, completion:{ () -> Void in
             self.delegate.homePostList.removeAll()
             self.getPost(0,step: 15)

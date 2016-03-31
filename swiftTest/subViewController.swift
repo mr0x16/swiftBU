@@ -9,12 +9,13 @@
 import UIKit
 
 protocol subViewDelegate {
-    func foo(fid:String)
+    func foo(fid:String, title:String)
 }
 
 class subViewController: UIViewController, UITableViewDelegate, UITableViewDataSource{
     let delegate = UIApplication.sharedApplication().delegate as! AppDelegate
     var delegateView:subViewDelegate?
+    let tableView = UITableView()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,7 +31,7 @@ class subViewController: UIViewController, UITableViewDelegate, UITableViewDataS
         
 //        containView.backgroundColor = UIColor(red: 204/255, green: 232/255, blue: 255/255, alpha: 1)
 //        self.view.addSubview(containView)
-        let tableView = UITableView()
+        
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.estimatedRowHeight = 100
         tableView.separatorStyle = UITableViewCellSeparatorStyle.None
@@ -87,13 +88,14 @@ class subViewController: UIViewController, UITableViewDelegate, UITableViewDataS
         let subId = (delegate.frmList.valueForKey(delegate.currFrmId) as! forumCell).subArray.objectAtIndex(row) as! String
         let currDate = delegate.subList.valueForKey(subId) as! subCell
         NSLog("Titel is \(currDate.frmName)")
-        let encodedData = currDate.frmName.dataUsingEncoding(NSUTF8StringEncoding)!
+        let title = (currDate.frmName).stringByReplacingOccurrencesOfString("+", withString: " ")
         let attributedOptions = [NSDocumentTypeDocumentAttribute:NSHTMLTextDocumentType]
+        NSLog("Titel is \(title)")
+        let encodedTitle = title.dataUsingEncoding(NSUnicodeStringEncoding)!
         do{
-            let attributeString = try NSAttributedString(data: encodedData, options: attributedOptions, documentAttributes: nil)
+            let attributeString = try NSAttributedString(data: encodedTitle, options: attributedOptions, documentAttributes: nil)
             NSLog("attributedText is \(attributeString)")
             cell.mainLab.attributedText = attributeString
-            
         } catch {
             print("Cannot create attributed String")
         }
@@ -106,7 +108,7 @@ class subViewController: UIViewController, UITableViewDelegate, UITableViewDataS
         let row = indexPath.row
         let subId = (delegate.frmList.valueForKey(delegate.currFrmId) as! forumCell).subArray.objectAtIndex(row) as! String
         self.dismissViewControllerAnimated(true, completion:{ () -> Void in
-            self.delegateView?.foo(subId)
+            self.delegateView?.foo(subId, title:((self.tableView.visibleCells[row] as! testTableViewCell).mainLab.attributedText?.string)!)
         })
     }
     

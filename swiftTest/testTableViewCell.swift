@@ -30,9 +30,10 @@ class testTableViewCell: UITableViewCell {
             make.centerX.equalTo(contentView.snp_centerX)
         }
         mainLab.sizeToFit()
-//        mainLab.font = UIFont.systemFontOfSize(16)
+        mainLab.font = UIFont.systemFontOfSize(16)
         title.addSubview(mainLab)
-        mainLab.backgroundColor = UIColor.redColor()
+//        mainLab.backgroundColor = UIColor.redColor()
+//        mainLab.attributedText.
         mainLab.snp_makeConstraints { (make) -> Void in
             make.edges.equalTo(title).inset(UIEdgeInsetsZero)
         }
@@ -57,19 +58,28 @@ class testTableViewCell: UITableViewCell {
     }
     
     func configureForCell(item: forumCell){
-        let titel = item.valueForKey("frmName") as? String
-        NSLog("Titel is \(titel)")
-        let encodedData = titel!.dataUsingEncoding(NSUTF8StringEncoding)!
+//        var title = String()
+        let title = (item.valueForKey("frmName") as! String).stringByReplacingOccurrencesOfString("+", withString: " ")
+        let desc = (item.valueForKey("desc") as! String).stringByReplacingOccurrencesOfString("+", withString: " ")
+        self.fid = item.fid
+
+        NSLog("Titel is \(title)")
+        let encodedTitle = title.dataUsingEncoding(NSUnicodeStringEncoding)!
+        let encodeDesc = desc.dataUsingEncoding(NSUnicodeStringEncoding)!
         let attributedOptions = [NSDocumentTypeDocumentAttribute:NSHTMLTextDocumentType]
         do{
-            let attributeString = try NSAttributedString(data: encodedData, options: attributedOptions, documentAttributes: nil)
-            self.mainLab.attributedText = attributeString
+            let attributeTitle = try NSAttributedString(data: encodedTitle, options: attributedOptions, documentAttributes: nil)
+            let attributeDesc = try NSAttributedString(data: encodeDesc, options: attributedOptions, documentAttributes: nil)
+//            self.mainLab.attributedText
+            self.mainLab.attributedText = attributeTitle
+            self.descLab.attributedText = attributeDesc
             
         } catch {
             print("Cannot create attributed String")
         }
+        
             //.text = item.valueForKey("frmName") as? String
-        self.descLab.text = item.valueForKey("desc") as? String
+        
         self.fid = item.fid
     }
     

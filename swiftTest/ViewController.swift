@@ -199,6 +199,7 @@ class ViewController: UITableViewController{
     
     func getHome(){
         delegate.indexPost()!.responseJSON{response in
+            self.delegate.homePostList.removeAll()
             if response.result.isSuccess {
                 let body = response.result.value as! NSDictionary
                 if body.valueForKey("result") as! String == "success"{
