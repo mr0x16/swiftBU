@@ -30,7 +30,7 @@ class testTableViewCell: UITableViewCell {
             make.centerX.equalTo(contentView.snp_centerX)
         }
         mainLab.sizeToFit()
-        mainLab.font = UIFont.systemFontOfSize(16)
+//        mainLab.font = UIFont.systemFontOfSize(16)
         title.addSubview(mainLab)
 //        mainLab.backgroundColor = UIColor.redColor()
 //        mainLab.attributedText.
@@ -59,8 +59,8 @@ class testTableViewCell: UITableViewCell {
     
     func configureForCell(item: forumCell){
 //        var title = String()
-        let title = (item.valueForKey("frmName") as! String).stringByReplacingOccurrencesOfString("+", withString: " ")
-        let desc = (item.valueForKey("desc") as! String).stringByReplacingOccurrencesOfString("+", withString: " ")
+        let title = "<font size=\"4\">"+(item.valueForKey("frmName") as! String).stringByReplacingOccurrencesOfString("+", withString: " ")+"</font>"
+        let desc = "<font size=\"2\">"+(item.valueForKey("desc") as! String).stringByReplacingOccurrencesOfString("+", withString: " ")+"</font>"
         self.fid = item.fid
 
         NSLog("Titel is \(title)")
@@ -68,10 +68,12 @@ class testTableViewCell: UITableViewCell {
         let encodeDesc = desc.dataUsingEncoding(NSUnicodeStringEncoding)!
         let attributedOptions = [NSDocumentTypeDocumentAttribute:NSHTMLTextDocumentType]
         do{
-            let attributeTitle = try NSAttributedString(data: encodedTitle, options: attributedOptions, documentAttributes: nil)
-            let attributeDesc = try NSAttributedString(data: encodeDesc, options: attributedOptions, documentAttributes: nil)
+            let attributeTitle = try NSMutableAttributedString(data: encodedTitle, options: attributedOptions, documentAttributes: nil)
+            let attributeDesc = try NSMutableAttributedString(data: encodeDesc, options: attributedOptions, documentAttributes: nil)
 //            self.mainLab.attributedText
+            attributeTitle.addAttribute(kCTFontSizeAttribute as String, value: CTFontCreateWithName(UIFont.systemFontOfSize(88).fontName , 88, nil), range: NSMakeRange(0, attributeTitle.length-1))
             self.mainLab.attributedText = attributeTitle
+            
             self.descLab.attributedText = attributeDesc
             
         } catch {

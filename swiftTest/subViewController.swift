@@ -50,7 +50,7 @@ class subViewController: UIViewController, UITableViewDelegate, UITableViewDataS
         
         tableView.dataSource = self
         tableView.delegate = self
-        
+        tableView.scrollEnabled = false
         let btnCancel = UIButton(type: .System)
         btnCancel.setTitle("返回", forState: .Normal)
         btnCancel.setTitleColor(UIColor.blackColor(), forState: .Normal)
@@ -93,7 +93,8 @@ class subViewController: UIViewController, UITableViewDelegate, UITableViewDataS
         NSLog("Titel is \(title)")
         let encodedTitle = title.dataUsingEncoding(NSUnicodeStringEncoding)!
         do{
-            let attributeString = try NSAttributedString(data: encodedTitle, options: attributedOptions, documentAttributes: nil)
+            let attributeString = try NSMutableAttributedString(data: encodedTitle, options: attributedOptions, documentAttributes: nil)
+            attributeString.addAttribute(kCTFontSizeAttribute as String, value: CTFontCreateWithName(UIFont.systemFontOfSize(200).fontName , 200, nil), range: NSMakeRange(0, attributeString.length))
             NSLog("attributedText is \(attributeString)")
             cell.mainLab.attributedText = attributeString
         } catch {

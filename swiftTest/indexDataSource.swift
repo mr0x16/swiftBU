@@ -55,7 +55,13 @@ class indexDataSource: NSObject,UITableViewDataSource,UITableViewDelegate{
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         if cellId == "pCell" {
-            NSLog("selected \(indexPath.row) post")
+            let currentCell = tableView.cellForRowAtIndexPath(indexPath) as! indexPostCell
+            
+            let tid = currentCell.tid
+//            NSLog("tid is \(tid)")
+            let postV = postDetailViewController(tid: tid)
+            postV.title = currentCell.pLabel.text
+            centerView.navigationController?.pushViewController(postV, animated: true)
         } else {
             NSLog("selected \(indexPath.row) forum")
             let rowNo = indexPath.row as Int

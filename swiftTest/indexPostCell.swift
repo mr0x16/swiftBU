@@ -21,6 +21,8 @@ class indexPostCell: UITableViewCell {
     let when = UIView()
     let wLabel = UILabel()
     
+    var tid = ""
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -96,6 +98,7 @@ class indexPostCell: UITableViewCell {
     
     func configureForCell(item: postCell){
         self.pLabel.text = item.pname
+        self.tid = item.tid
         self.aLabel.text = "发帖人: \(item.author)"
         self.tLabel.text = "回复数: \(item.tid_sum)"
         self.wLabel.text = "最后回复: \(item.when)"

@@ -113,6 +113,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let urlStr = urlHead + "bu_home.php"
         return Alamofire.request(.POST,urlStr,parameters:["username":username,"session":session],encoding:ParameterEncoding.JSON )
     }
+    
+    func listDetail(tid:String, begin:Int, end:Int) ->Request? {
+        let username = self.pTran.paramsGet("userName")
+        let session = self.pTran.paramsGet("session")
+        let urlStr = urlHead + "bu_post.php"
+        return Alamofire.request(.POST,urlStr,parameters:["action":"post","username":username,"session":session,"tid":tid,"from":"\(begin)","to":"\(end)"],encoding:ParameterEncoding.JSON )
+    }
     // MARK: - 增删改查
     func addData(name: String, key: String) {
         
