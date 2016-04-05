@@ -211,7 +211,7 @@ class ViewController: UITableViewController{
                     var when:String
                     NSLog("*****获取首页帖子成功******")
                     for post in body.valueForKey("newlist") as! NSArray {
-                        author = (post.valueForKey("author")!.stringByRemovingPercentEncoding!)!
+                        author = (post.valueForKey("author") as! String).stringByReplacingOccurrencesOfString("+", withString: " ").stringByRemovingPercentEncoding!
                         fid = post.valueForKey("fid") as! String
                         tid = post.valueForKey("tid") as! String
                         tid_sum = post.valueForKey("tid_sum") as! String
@@ -236,7 +236,7 @@ class ViewController: UITableViewController{
                 let body = response.result.value as! NSDictionary
                 if body.valueForKey("result") as! String == "success"{
                     let content = body.valueForKey("memberinfo") as! NSDictionary
-                    self.pTran.paramsSet("avatar", value:(content.valueForKey("avatar")!.stringByRemovingPercentEncoding!)!)
+                    self.pTran.paramsSet("avatar", value:(content.valueForKey("avatar") as! String).stringByReplacingOccurrencesOfString("+", withString: " ").stringByRemovingPercentEncoding!)
                     NSLog("**********\(self.pTran.paramsGet("avatar"))************")
                     self.pTran.paramsSet("bday", value: content.valueForKey("bday")!)
                     self.pTran.paramsSet("postnum", value: content.valueForKey("postnum")!)
@@ -278,7 +278,7 @@ class ViewController: UITableViewController{
                     for grp in body.valueForKey("forumslist")!.allKeys{
                         if grp as! String != ""{
                             grpBody = body.valueForKey("forumslist")?.valueForKey(grp as! String) as! NSDictionary
-                            forumName = (grpBody.valueForKey("main")?.valueForKey("name")!.stringByRemovingPercentEncoding!)!
+                            forumName = (grpBody.valueForKey("main")?.valueForKey("name") as! String).stringByReplacingOccurrencesOfString("+", withString: " ").stringByRemovingPercentEncoding!
                             forumId = grpBody.valueForKey("main")?.valueForKey("fid") as! String
                             self.delegate.grpList.append(groupCell(grpName: forumName, fid: forumId))
 //                            NSLog("GROUP name is \(forumName),id is \(forumId)")
@@ -288,7 +288,7 @@ class ViewController: UITableViewController{
                                     if forumName == "后台管理区" {
                                         continue
                                     }
-                                    forumDesc = (grpBody.valueForKey(frm as! String)?.valueForKey("main")?.firstObject!!.valueForKey("description")!.stringByRemovingPercentEncoding!)!
+                                    forumDesc = (grpBody.valueForKey(frm as! String)?.valueForKey("main")?.firstObject!!.valueForKey("description")! as! String).stringByReplacingOccurrencesOfString("+", withString: " ").stringByRemovingPercentEncoding!
                                     forumId = grpBody.valueForKey(frm as! String)?.valueForKey("main")?.firstObject!!.valueForKey("fid")! as! String
                                     self.delegate.frmList.setValue(forumCell(frmName: forumName, fid: forumId, desc: forumDesc), forKey: forumId)
                                     self.delegate.grpList[grpCal].frmArray.addObject(forumId)
@@ -298,9 +298,9 @@ class ViewController: UITableViewController{
                                     if frmBody.count == 2{
                                         subArray = frmBody.valueForKey("sub") as! NSArray
                                         for sub in subArray{
-                                            forumName = (sub.valueForKey("name")?.stringByRemovingPercentEncoding)!
+                                            forumName = (sub.valueForKey("name") as! String).stringByReplacingOccurrencesOfString("+", withString: " ").stringByRemovingPercentEncoding!
                                             forumId = sub.valueForKey("fid") as! String
-                                            forumDesc = (sub.valueForKey("description")?.stringByRemovingPercentEncoding)!
+                                            forumDesc = (sub.valueForKey("description") as! String).stringByReplacingOccurrencesOfString("+", withString: " ").stringByRemovingPercentEncoding!
                                             self.delegate.subList.setValue(subCell(frmName: forumName, fid: forumId, desc: forumDesc), forKey: forumId)
                                             (self.delegate.frmList.valueForKey(frmStr) as! forumCell).subArray.addObject(forumId)
                                             (self.delegate.frmList.valueForKey(frmStr) as! forumCell).subArray.count

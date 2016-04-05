@@ -30,10 +30,7 @@ class testTableViewCell: UITableViewCell {
             make.centerX.equalTo(contentView.snp_centerX)
         }
         mainLab.sizeToFit()
-//        mainLab.font = UIFont.systemFontOfSize(16)
         title.addSubview(mainLab)
-//        mainLab.backgroundColor = UIColor.redColor()
-//        mainLab.attributedText.
         mainLab.snp_makeConstraints { (make) -> Void in
             make.edges.equalTo(title).inset(UIEdgeInsetsZero)
         }
@@ -59,7 +56,7 @@ class testTableViewCell: UITableViewCell {
     
     func configureForCell(item: forumCell){
 //        var title = String()
-        let title = "<font size=\"4\">"+(item.valueForKey("frmName") as! String).stringByReplacingOccurrencesOfString("+", withString: " ")+"</font>"
+        let title = "<font size=\"4\">"+(item.valueForKey("frmName") as! String)+"</font>"
         let desc = "<font size=\"2\">"+(item.valueForKey("desc") as! String).stringByReplacingOccurrencesOfString("+", withString: " ")+"</font>"
         self.fid = item.fid
 

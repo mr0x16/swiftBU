@@ -12,8 +12,8 @@ class postDetailViewController: UIViewController,UITableViewDelegate, UITableVie
     let delegate = UIApplication.sharedApplication().delegate as! AppDelegate
     var tid:String = ""
     let modalView = secViewController()
-    let replyList = [replayCell]()
-    
+    var replyList = [replayCell]()
+    let tableView = UITableView()
     convenience init(tid:String){
         self.init()
         self.tid = tid
@@ -22,6 +22,7 @@ class postDetailViewController: UIViewController,UITableViewDelegate, UITableVie
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = UIColor(red: 204/255, green: 232/255, blue: 255/255, alpha: 1)
+        self.tableView.backgroundColor = UIColor(red: 204/255, green: 232/255, blue: 255/255, alpha: 1)
         let rightBtn = UIBarButtonItem(barButtonSystemItem: .Compose, target: self, action: #selector(self.addReply))
         self.navigationItem.rightBarButtonItem = rightBtn
         modalView.modalPresentationStyle = .OverCurrentContext
@@ -30,6 +31,16 @@ class postDetailViewController: UIViewController,UITableViewDelegate, UITableVie
         self.presentViewController(modalView, animated: true, completion: { () -> Void in
             self.getDetail(self.tid, begin: 0, end: 15)
         })
+        self.tableView.rowHeight = UITableViewAutomaticDimension
+        self.tableView.estimatedRowHeight = 100
+//        self.tableView.separatorStyle = UITableViewCellSeparatorStyle.None
+        self.view.addSubview(tableView)
+        tableView.dataSource = self
+        tableView.delegate = self
+        tableView.registerClass(replyTableViewCell.self, forCellReuseIdentifier: "Cell")
+        tableView.snp_makeConstraints { (make) -> Void in
+            make.edges.equalTo(view).inset(UIEdgeInsetsZero)
+        }
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
@@ -48,9 +59,12 @@ class postDetailViewController: UIViewController,UITableViewDelegate, UITableVie
                 if body.valueForKey("result") as! String == "success"{
 //                    NSLog(body.description)
                     for reply in body.valueForKey("postlist") as! NSArray {
-                        NSLog((reply.valueForKey("message") as! String).stringByRemovingPercentEncoding!)
+                        let message = (reply.valueForKey("message") as! String).stringByReplacingOccurrencesOfString("+", withString: " ").stringByRemovingPercentEncoding!
+                        NSLog(message)
+                        self.replyList.append(replayCell(str: message))
                         NSLog("\n")
                     }
+                    self.tableView.reloadData()
                 }
             }
         }
@@ -68,18 +82,22 @@ class postDetailViewController: UIViewController,UITableViewDelegate, UITableVie
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
-        return 0
+        return 1
     }
 
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return 0
+        return replyList.count
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("Cell")
-        
-        return cell!
+        let cell = tableView.dequeueReusableCellWithIdentifier("Cell") as! replyTableViewCell
+        let row = indexPath.row
+//        if cell == nil{
+//            cell = replyTableViewCell(style: .Default, reuseIdentifier: "Cell")
+//        }
+        cell.msgLabel.attributedText = replyList[row].message
+        return cell
     }
 
     /*

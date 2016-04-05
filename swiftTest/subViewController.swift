@@ -88,7 +88,7 @@ class subViewController: UIViewController, UITableViewDelegate, UITableViewDataS
         let subId = (delegate.frmList.valueForKey(delegate.currFrmId) as! forumCell).subArray.objectAtIndex(row) as! String
         let currDate = delegate.subList.valueForKey(subId) as! subCell
         NSLog("Titel is \(currDate.frmName)")
-        let title = (currDate.frmName).stringByReplacingOccurrencesOfString("+", withString: " ")
+        let title = (currDate.frmName)
         let attributedOptions = [NSDocumentTypeDocumentAttribute:NSHTMLTextDocumentType]
         NSLog("Titel is \(title)")
         let encodedTitle = title.dataUsingEncoding(NSUnicodeStringEncoding)!
