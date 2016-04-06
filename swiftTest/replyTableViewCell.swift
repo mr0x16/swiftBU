@@ -10,7 +10,7 @@ import UIKit
 
 class replyTableViewCell: UITableViewCell {
     let msgView = UIView()
-    let msgLabel = UILabel()
+    let msgLabel = UITextView()
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -28,8 +28,12 @@ class replyTableViewCell: UITableViewCell {
             make.bottom.equalTo(contentView.snp_bottom).offset(-20)
         }
         msgLabel.sizeToFit()
-        msgLabel.lineBreakMode = NSLineBreakMode.ByWordWrapping
-        msgLabel.numberOfLines = 1000
+        msgLabel.editable = false
+        msgLabel.scrollEnabled = false
+        msgLabel.backgroundColor = self.backgroundColor
+//        msgLabel.selectable = false
+//        msgLabel.lineBreakMode = NSLineBreakMode.ByWordWrapping
+//        msgLabel.numberOfLines = 1000
         msgView.addSubview(msgLabel)
         msgLabel.snp_makeConstraints { (make) -> Void in
             make.edges.equalTo(msgView).inset(UIEdgeInsetsZero)

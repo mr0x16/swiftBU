@@ -65,7 +65,7 @@ class postDetailViewController: UIViewController,UITableViewDelegate, UITableVie
                         if reply.valueForKey("attachimg") != nil {
                             let attachImg = (reply.valueForKey("attachment") as! String).stringByReplacingOccurrencesOfString("+", withString: " ").stringByRemovingPercentEncoding!
                             
-                            message += "<img src=\("http://out.bitunion.org/" + attachImg) border=0/>"
+                            message += "<img src=\("http://out.bitunion.org/" + attachImg)/>"
                         }
                         
 //                        NSLog("*************Message is: " + message + " ***************")
@@ -105,7 +105,7 @@ class postDetailViewController: UIViewController,UITableViewDelegate, UITableVie
 //        if cell == nil{
 //            cell = replyTableViewCell(style: .Default, reuseIdentifier: "Cell")
 //        }
-        NSLog("\(replyList[row].message)")
+//        NSLog("\(replyList[row].message)")
         
         cell.msgLabel.attributedText = replyList[row].message
         return cell

@@ -30,7 +30,10 @@ class testTableViewCell: UITableViewCell {
             make.centerX.equalTo(contentView.snp_centerX)
         }
         mainLab.sizeToFit()
+//        mainLab.backgroundColor = UIColor(red: 204/255, green: 232/255, blue: 255/255, alpha: 1)
         title.addSubview(mainLab)
+//        mainLab.editable = false
+//        mainLab.scrollEnabled = false
         mainLab.snp_makeConstraints { (make) -> Void in
             make.edges.equalTo(title).inset(UIEdgeInsetsZero)
         }
@@ -39,13 +42,17 @@ class testTableViewCell: UITableViewCell {
             make.top.equalTo(title.snp_bottom)
             make.left.equalTo(contentView.snp_left).offset(25)
             make.right.equalTo(contentView.snp_right).offset(-25)
+            make.bottom.equalTo(contentView.snp_bottom)
         }
         descLab.sizeToFit()
+//        descLab.backgroundColor = UIColor(red: 204/255, green: 232/255, blue: 255/255, alpha: 1)
         descLab.textAlignment = .Center
         descLab.textColor = UIColor.grayColor()
         descLab.lineBreakMode = NSLineBreakMode.ByWordWrapping
         descLab.font = UIFont.systemFontOfSize(8)
         descLab.numberOfLines = 2
+//        descLab.editable = false
+//        descLab.scrollEnabled = false
         desc.addSubview(descLab)
         descLab.snp_makeConstraints { (make) -> Void in
             make.edges.equalTo(desc).inset(UIEdgeInsetsZero)

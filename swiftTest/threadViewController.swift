@@ -15,7 +15,7 @@ class threadViewController: UIViewController {
     let tableView = UITableView()
     let collView = UIView()
     var screenWidth:CGFloat = 0
-//    var collHeight:CGFloat = 0
+    var collHeight:CGFloat = 0
     var fid:String = ""
     var dateSource = NSObject()
     override func viewDidLoad() {
@@ -40,7 +40,7 @@ class threadViewController: UIViewController {
             self.navigationItem.rightBarButtonItem = subArea
         }
 
-//        self.collHeight = self.screenWidth/4
+        self.collHeight = self.screenWidth/4
         self.tableView.rowHeight = UITableViewAutomaticDimension
         self.tableView.estimatedRowHeight = 100
         self.tableView.separatorStyle = UITableViewCellSeparatorStyle.None
