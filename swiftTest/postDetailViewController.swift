@@ -38,6 +38,7 @@ class postDetailViewController: UIViewController,UITableViewDelegate, UITableVie
         tableView.dataSource = self
         tableView.delegate = self
         tableView.registerClass(replyTableViewCell.self, forCellReuseIdentifier: "Cell")
+        tableView.allowsSelection = false
         tableView.snp_makeConstraints { (make) -> Void in
             make.edges.equalTo(view).inset(UIEdgeInsetsZero)
         }
@@ -59,16 +60,24 @@ class postDetailViewController: UIViewController,UITableViewDelegate, UITableVie
                 if body.valueForKey("result") as! String == "success"{
 //                    NSLog(body.description)
                     for reply in body.valueForKey("postlist") as! NSArray {
-                        let message = (reply.valueForKey("message") as! String).stringByReplacingOccurrencesOfString("+", withString: " ").stringByRemovingPercentEncoding!
-                        NSLog(message)
+                        var message = reply.valueForKey("message") as! String
+                        message = message.stringByReplacingOccurrencesOfString("+", withString: " ").stringByRemovingPercentEncoding!
+                        if reply.valueForKey("attachimg") != nil {
+                            let attachImg = (reply.valueForKey("attachment") as! String).stringByReplacingOccurrencesOfString("+", withString: " ").stringByRemovingPercentEncoding!
+                            
+                            message += "<img src=\("http://out.bitunion.org/" + attachImg) border=0/>"
+                        }
+                        
+//                        NSLog("*************Message is: " + message + " ***************")
                         self.replyList.append(replayCell(str: message))
-                        NSLog("\n")
+//                        NSLog("\n")
                     }
                     self.tableView.reloadData()
                 }
             }
+            self.dismissViewControllerAnimated(true, completion: nil)
         }
-        self.dismissViewControllerAnimated(true, completion: nil)
+        
     }
 
     override func didReceiveMemoryWarning() {
@@ -96,6 +105,8 @@ class postDetailViewController: UIViewController,UITableViewDelegate, UITableVie
 //        if cell == nil{
 //            cell = replyTableViewCell(style: .Default, reuseIdentifier: "Cell")
 //        }
+        NSLog("\(replyList[row].message)")
+        
         cell.msgLabel.attributedText = replyList[row].message
         return cell
     }

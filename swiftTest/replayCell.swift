@@ -16,6 +16,7 @@ class replayCell: NSObject {
         let attributedOptions = [NSDocumentTypeDocumentAttribute:NSHTMLTextDocumentType]
         do{
             let attributeMsg = try NSMutableAttributedString(data: encodedMsg, options: attributedOptions, documentAttributes: nil)
+            
             self.message = attributeMsg
         } catch {
             self.message = NSMutableAttributedString(string: "")
