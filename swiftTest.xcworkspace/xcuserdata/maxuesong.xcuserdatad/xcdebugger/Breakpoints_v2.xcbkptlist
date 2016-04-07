@@ -95,7 +95,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "70"
             endingLineNumber = "70"
-            landmarkName = "login()"
+            landmarkName = "applicationWillTerminate(_:)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -522,11 +522,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "swiftTest/postDetailViewController.swift"
-            timestampString = "481568960.087098"
+            timestampString = "481734454.143723"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "64"
-            endingLineNumber = "64"
+            startingLineNumber = "65"
+            endingLineNumber = "65"
             landmarkName = "getDetail(_:begin:end:)"
             landmarkType = "5">
          </BreakpointContent>
@@ -538,28 +538,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "swiftTest/postDetailViewController.swift"
-            timestampString = "481569072.622789"
+            timestampString = "481734454.143723"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "100"
-            endingLineNumber = "100"
+            startingLineNumber = "104"
+            endingLineNumber = "104"
             landmarkName = "tableView(_:numberOfRowsInSection:)"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "swiftTest/postDetailViewController.swift"
-            timestampString = "481569107.147517"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "68"
-            endingLineNumber = "68"
-            landmarkName = "getDetail(_:begin:end:)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

@@ -62,11 +62,15 @@ class postDetailViewController: UIViewController,UITableViewDelegate, UITableVie
                     for reply in body.valueForKey("postlist") as! NSArray {
                         var message = reply.valueForKey("message") as! String
                         message = message.stringByReplacingOccurrencesOfString("+", withString: " ").stringByRemovingPercentEncoding!
-                        if reply.valueForKey("attachimg") != nil {
-                            let attachImg = (reply.valueForKey("attachment") as! String).stringByReplacingOccurrencesOfString("+", withString: " ").stringByRemovingPercentEncoding!
-                            
-                            message += "<img src=\"\("http://out.bitunion.org/" + attachImg)\" />"
-                        }
+                        let org = "src=\"../"
+                        let target = "src=\"http://out.bitunion.org/"
+                        NSLog("org is \(org) target is \(target)")
+                        message = message.stringByReplacingOccurrencesOfString(org, withString: target)
+//                        if reply.valueForKey("attachimg") != nil {
+//                            let attachImg = (reply.valueForKey("attachment") as! String).stringByReplacingOccurrencesOfString("+", withString: " ").stringByRemovingPercentEncoding!
+//                            
+//                            message += "<img src=\"\("http://out.bitunion.org/" + attachImg)\" />"
+//                        }
                         
                         NSLog("*************Message is: " + message + " ***************")
                         self.replyList.append(replayCell(str: message))
