@@ -57,6 +57,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func applicationWillTerminate(application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+        self.logout()?.responseJSON{ response in
+            if response.result.isSuccess {
+                let body = response.result.value as! NSDictionary
+                if body.valueForKey("result") as! String == "success"{
+                    NSLog("Logout success!")
+                } else {
+                    NSLog("Logout failure!")
+                }
+            } else {
+                NSLog("Logout failure!")
+            }
+        }
+        NSLog("App has terminate!")
     }
     // MARK: - 其他方法
     func getFrmCell() -> (forumName: String, subArray: NSArray){
@@ -119,6 +132,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let session = self.pTran.paramsGet("session")
         let urlStr = urlHead + "bu_post.php"
         return Alamofire.request(.POST,urlStr,parameters:["action":"post","username":username,"session":session,"tid":tid,"from":"\(begin)","to":"\(end)"],encoding:ParameterEncoding.JSON )
+    }
+    
+    func logout() ->Request? {
+        let username = self.pTran.paramsGet("userName")
+        let password = self.pTran.paramsGet("passWord")
+        let session = self.pTran.paramsGet("session")
+        let urlStr = urlHead + "bu_logging.php"
+        return Alamofire.request(.POST,urlStr,parameters:["action":"logout","username":username,"password":password,"session":session],encoding:ParameterEncoding.JSON )
     }
     // MARK: - 增删改查
     func addData(name: String, key: String) {
