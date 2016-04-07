@@ -26,8 +26,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //    var request:Request
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
 //        self.login()
-        let VC=ContainerViewController()
-//        let VC = richTextViewController()
+//        let VC=ContainerViewController()
+        let VC = richTextViewController()
 //        let navigationC=UINavigationController(rootViewController: VC)
 //        navigationC.navigationBar.backgroundColor = UIColor(red: 51/255, green: 165/255, blue: 252/255, alpha: 1.0)
         self.window?.rootViewController=VC
