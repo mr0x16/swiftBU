@@ -19,15 +19,15 @@ class richTextViewController: UIViewController {
         richView.sizeToFit()
         
         
-        var msg = "<img src=\"http://out.bitunion.org/images/bz/80.gif\" border=\"0\">"//"<br/><br/><font size=\"5\">白鹅帮，支配北理良乡永恒的恐怖！<img src=\"http://out.bitunion.org/images/bz/80.gif\" border=\"0\"> </font><img src=http://out.bitunion.org/attachments/forumid_24/s/S/sSKZ_NTk1OQ==.jpg max-width:90% max-height:90% border=\"0\"/><a href=http://out.bitunion.org/thread-10471436-1-1.html>From BIT-Union Open API Project</a>"
+        let msg = "<br/><br/><font size=\"5\">白鹅帮，支配北理良乡永恒的恐怖！<img src=\"../images/bz/80.gif\" border=\"0\"> </font><img src=http://out.bitunion.org/attachments/forumid_24/s/S/sSKZ_NTk1OQ==.jpg max-width:90% max-height:90% border=\"0\"/><a href=http://out.bitunion.org/thread-10471436-1-1.html>From BIT-Union Open API Project</a>"//"<img src=\"http://out.bitunion.org/images/bz/80.gif\" border=\"0\">"//"<br/><br/><font size=\"5\">白鹅帮，支配北理良乡永恒的恐怖！<img src=\"http://out.bitunion.org/images/bz/80.gif\" border=\"0\"> </font><img src=http://out.bitunion.org/attachments/forumid_24/s/S/sSKZ_NTk1OQ==.jpg max-width:90% max-height:90% border=\"0\"/><a href=http://out.bitunion.org/thread-10471436-1-1.html>From BIT-Union Open API Project</a>"
         
         do{
-            let mailPattern = "src[\\s\\t\\r\\n]*=[\\s\\t\\r\\n]*[\"\"']?[\\s\\t\\r\\n]*(?<imgUrl>[^\\s\\t\\r\\n\"\"'<>]*)[^<>]*?/?[\\s\\t\\r\\n]*"
+            let mailPattern = "<img\\b[^<>]*?\\bsrc[\\s\\t\\r\\n]*=[\\s\\t\\r\\n]*[\"\"']?[\\s\\t\\r\\n]*(?<imgUrl>[^\\s\\t\\r\\n\"\"'<>]*)[^<>]*?/?[\\s\\t\\r\\n]*>"
             NSLog(mailPattern)
             let regex = try NSRegularExpression(pattern: mailPattern, options: .CaseInsensitive)
             let res = regex.matchesInString(msg, options: NSMatchingOptions(rawValue: 0), range: NSMakeRange(0, msg.characters.count))
             for checkingRes in res {
-                msg = (msg as NSString).stringByReplacingCharactersInRange(checkingRes.range, withString: "")
+//                msg = (msg as NSString).stringByReplacingCharactersInRange(checkingRes.range, withString: "")
 //                msg.
                 print((msg as NSString).substringWithRange(checkingRes.range))
             }

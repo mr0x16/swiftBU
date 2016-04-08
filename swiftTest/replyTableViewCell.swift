@@ -11,6 +11,7 @@ import UIKit
 class replyTableViewCell: UITableViewCell {
     let msgView = UIView()
     let msgLabel = UITextView()
+    let imgAttach = UIImageView()
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -25,7 +26,7 @@ class replyTableViewCell: UITableViewCell {
             make.top.equalTo(contentView.snp_top).offset(20)
             make.right.equalTo(contentView.snp_right).offset(-gapSpaceLeft)
             make.left.equalTo(contentView).offset(gapSpaceLeft)
-            make.bottom.equalTo(contentView.snp_bottom).offset(-20)
+//            make.bottom.equalTo(contentView.snp_bottom).offset(-20)
         }
         msgLabel.sizeToFit()
         msgLabel.editable = false
@@ -37,6 +38,11 @@ class replyTableViewCell: UITableViewCell {
         msgView.addSubview(msgLabel)
         msgLabel.snp_makeConstraints { (make) -> Void in
             make.edges.equalTo(msgView).inset(UIEdgeInsetsZero)
+        }
+        
+        imgAttach.backgroundColor = UIColor.grayColor()
+        imgAttach.snp_makeConstraints { (make) in
+            
         }
     }
     

@@ -10,9 +10,34 @@ import UIKit
 
 class replayCell: NSObject {
     let message:NSMutableAttributedString
+    var attachImg = [String]()
     init(str:String) {
+        do{
+            let imgPattern = "<img\\b[^<>]*?\\bsrc[\\s\\t\\r\\n]*=[\\s\\t\\r\\n]*[\"\"']?[\\s\\t\\r\\n]*(?<imgUrl>[^\\s\\t\\r\\n\"\"'<>]*)[^<>]*?/?[\\s\\t\\r\\n]*>"
+            NSLog(imgPattern)
+            let regex = try NSRegularExpression(pattern: imgPattern, options: .CaseInsensitive)
+            let res = regex.matchesInString(str, options: NSMatchingOptions(rawValue: 0), range: NSMakeRange(0, str.characters.count))
+            for checkingRes in res {
+                //                msg = (msg as NSString).stringByReplacingCharactersInRange(checkingRes.range, withString: "")
+                //                msg.
+                self.attachImg.append((str as NSString).substringWithRange(checkingRes.range))
+            }
+        } catch {
+            
+        }
+        
+        for attachStr in attachImg {
+            NSLog("ATTACHSTR is \(attachStr)")
+            if attachStr.containsString("http://") {
+                str.stringByReplacingOccurrencesOfString(attachStr, withString: "")
+            }
+        }
+        
         let encodedMsg = str.dataUsingEncoding(NSUnicodeStringEncoding)!
         let attributedOptions = [NSDocumentTypeDocumentAttribute:NSHTMLTextDocumentType]
+        
+        
+        
         do{
             let attributeMsg = try NSMutableAttributedString(data: encodedMsg, options: attributedOptions, documentAttributes: nil)
             attributeMsg.enumerateAttribute(NSAttachmentAttributeName, inRange: NSMakeRange(0, attributeMsg.length), options: .LongestEffectiveRangeNotRequired, usingBlock: { (value, range, stop) in
